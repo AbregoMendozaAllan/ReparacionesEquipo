@@ -46,6 +46,7 @@ CREATE TABLE `usuarios` (
 )
     COLLATE='utf8mb4_uca1400_ai_ci'
     ENGINE=InnoDB
+    AUTO_INCREMENT=11
 ;
 CREATE TABLE `equipos` (
                            `id_equipo` INT(11) NOT NULL AUTO_INCREMENT,
@@ -144,12 +145,35 @@ CREATE TABLE `bitacora_reparaciones` (
     COLLATE='utf8mb4_uca1400_ai_ci'
     ENGINE=InnoDB
 ;
-CREATE TABLE Login (
-                       id_login INT PRIMARY KEY AUTO_INCREMENT,
-                       id_usuario INT NOT NULL,
-                       username VARCHAR(50) UNIQUE NOT NULL,
-                       password VARCHAR(255) NOT NULL, -- Hashed password for security
-                       ultimo_login TIMESTAMP NULL,
-                       fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                       FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario) ON DELETE CASCADE
-);
+CREATE TABLE `login` (
+                         `id_login` INT(11) NOT NULL AUTO_INCREMENT,
+                         `id_usuario` INT(11) NOT NULL,
+                         `username` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_uca1400_ai_ci',
+                         `password_hash` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_uca1400_ai_ci',
+                         `ultimo_login` TIMESTAMP NULL DEFAULT NULL,
+                         `fecha_creacion` TIMESTAMP NULL DEFAULT current_timestamp(),
+                         PRIMARY KEY (`id_login`) USING BTREE,
+                         UNIQUE INDEX `username` (`username`) USING BTREE,
+                         INDEX `id_usuario` (`id_usuario`) USING BTREE,
+                         CONSTRAINT `login_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON UPDATE RESTRICT ON DELETE CASCADE
+)
+    COLLATE='utf8mb4_uca1400_ai_ci'
+    ENGINE=InnoDB
+    AUTO_INCREMENT=10
+;
+CREATE TABLE `bitacora_login` (
+                                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                                  `id_usuario` INT(11) NOT NULL,
+                                  `time_stamp` TIMESTAMP NOT NULL,
+                                  `ip_add` VARCHAR(50) NULL DEFAULT '' COLLATE 'utf8mb4_uca1400_ai_ci',
+                                  `status` ENUM('SUCESS','FAILED') NOT NULL COLLATE 'utf8mb4_uca1400_ai_ci',
+                                  `error` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_uca1400_ai_ci',
+                                  `user_agent` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_uca1400_ai_ci',
+                                  PRIMARY KEY (`id`) USING BTREE,
+                                  INDEX `FK__usuarios` (`id_usuario`) USING BTREE,
+                                  CONSTRAINT `FK__usuarios` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+    COLLATE='utf8mb4_uca1400_ai_ci'
+    ENGINE=InnoDB
+;
+
