@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Historial de Reparaciones</title>
+</head>
+<body>
+    <h1>Listado de Historial de Reparaciones</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID Reparación</th>
+                <th>Descripción</th>
+                <th>Fecha</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% historial.forEach(registro => { %>
+                <tr>
+                    <td><%= registro.id_reparacion %></td>
+                    <td><%= registro.descripcion %></td>
+                    <td><%= registro.fecha %></td>
+                    <td>
+                        <a href="/historial-reparaciones/edit/<%= registro.id_historial %>">Editar</a>
+                        <a href="/historial-reparaciones/delete/<%= registro.id_historial %>">Eliminar</a>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+    <a href="/historial-reparaciones/create">Crear nuevo historial de reparación</a>
+</body>
+</html>

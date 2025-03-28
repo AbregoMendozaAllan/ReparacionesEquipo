@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Reparación</title>
+</head>
+<body>
+    <h1>Detalle de la Reparación</h1>
+
+    <p><strong>ID:</strong> <%= reparacion.id %></p>
+    <p><strong>Descripción:</strong> <%= reparacion.descripcion %></p>
+    <p><strong>Fecha:</strong> <%= reparacion.fecha %></p>
+    <p><strong>Cliente ID:</strong> <%= reparacion.id_cliente %></p>
+    <p><strong>Equipo ID:</strong> <%= reparacion.id_equipo %></p>
+
+    <a href="/reparaciones">Volver al listado de reparaciones</a>
+</body>
+</html>

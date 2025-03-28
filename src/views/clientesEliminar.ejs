@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Cliente</title>
+</head>
+<body>
+
+    <h1>Eliminar Cliente</h1>
+
+    <p>¿Estás seguro de que deseas eliminar al cliente <%= cliente.nombre %>?</p>
+
+    <form action="/clientes/eliminar/<%= cliente.id_cliente %>" method="POST">
+        <button type="submit">Sí, eliminar</button>
+    </form>
+
+    <a href="/clientes">Volver al listado</a>
+
+</body>
+</html>

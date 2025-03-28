@@ -1,0 +1,31 @@
+<h1>Listado de Empleados</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Puesto</th>
+            <th>Salario</th>
+            <th>Teléfono</th>
+            <th>Correo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% empleados.forEach(empleado => { %>
+            <tr>
+                <td><%= empleado.nombre %></td>
+                <td><%= empleado.puesto %></td>
+                <td><%= empleado.salario %></td>
+                <td><%= empleado.telefono %></td>
+                <td><%= empleado.correo %></td>
+                <td>
+                    <a href="/empleados/edit/<%= empleado.id %>">Editar</a>
+                    <form action="/empleados/delete/<%= empleado.id %>" method="POST" style="display:inline;">
+                        <button type="submit">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+        <% }); %>
+    </tbody>
+</table>
+<a href="/empleados/create">Crear nuevo empleado</a>

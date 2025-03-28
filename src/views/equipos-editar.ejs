@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Equipo</title>
+</head>
+<body>
+  <h1>Editar Equipo</h1>
+  <form action="/equipos/edit/<%= equipo.id_equipo %>" method="POST">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" value="<%= equipo.nombre %>" required>
+    <br>
+    <label for="descripcion">Descripción:</label>
+    <textarea id="descripcion" name="descripcion" required><%= equipo.descripcion %></textarea>
+    <br>
+    <label for="fecha_creacion">Fecha de Creación:</label>
+    <input type="date" id="fecha_creacion" name="fecha_creacion" value="<%= equipo.fecha_creacion %>" required>
+    <br>
+    <button type="submit">Actualizar Equipo</button>
+  </form>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle del Equipo</title>
+</head>
+<body>
+  <h1>Detalle del Equipo</h1>
+  <p><strong>Nombre:</strong> <%= equipo.nombre %></p>
+  <p><strong>Descripción:</strong> <%= equipo.descripcion %></p>
+  <p><strong>Fecha de Creación:</strong> <%= equipo.fecha_creacion %></p>
+  <a href="/equipos/edit/<%= equipo.id_equipo %>">Editar</a>
+  <form action="/equipos/delete/<%= equipo.id_equipo %>" method="POST">
+    <button type="submit">Eliminar</button>
+  </form>
+</body>
+</html>

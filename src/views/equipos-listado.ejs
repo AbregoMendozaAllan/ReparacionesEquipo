@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listado de Equipos</title>
+</head>
+<body>
+  <h1>Listado de Equipos</h1>
+  <a href="/equipos/create">Crear nuevo equipo</a>
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Fecha de Creación</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% equipos.forEach(equipo => { %>
+        <tr>
+          <td><%= equipo.nombre %></td>
+          <td><%= equipo.descripcion %></td>
+          <td><%= equipo.fecha_creacion %></td>
+          <td>
+            <a href="/equipos/edit/<%= equipo.id_equipo %>">Editar</a>
+            <form action="/equipos/delete/<%= equipo.id_equipo %>" method="POST">
+              <button type="submit">Eliminar</button>
+            </form>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</body>
+</html>

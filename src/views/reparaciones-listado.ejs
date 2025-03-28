@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Reparaciones</title>
+</head>
+<body>
+    <h1>Listado de Reparaciones</h1>
+
+    <a href="/reparaciones/create">Crear nueva reparación</a>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Descripción</th>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Equipo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% reparaciones.forEach(reparacion => { %>
+                <tr>
+                    <td><%= reparacion.id %></td>
+                    <td><%= reparacion.descripcion %></td>
+                    <td><%= reparacion.fecha %></td>
+                    <td><%= reparacion.id_cliente %></td>
+                    <td><%= reparacion.id_equipo %></td>
+                    <td>
+                        <a href="/reparaciones/edit/<%= reparacion.id %>">Editar</a>
+                        <form action="/reparaciones/delete/<%= reparacion.id %>" method="POST" style="display:inline;">
+                            <button type="submit">Eliminar</button>
+                        </form>
+                        <a href="/reparaciones/<%= reparacion.id %>">Ver detalles</a>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</body>
+</html>
