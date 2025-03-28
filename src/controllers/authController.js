@@ -27,7 +27,7 @@ export const registerUser = async (req, res) => {
         const [existingUsername] = await getUsernameByUsername(username);
         console.log(existingUsername);
         if (existingUsername) {
-            return res.status(400).send("Usuario ya en uso");
+            return res.status(400).send("usuario ya en uso");
         }
         // check if email exists
         const [existingEmail] = await getEmailByEmail(email);
@@ -41,7 +41,7 @@ export const registerUser = async (req, res) => {
         const passwordHash = await bcrypt.hash(password, salt);
 
         await createUsuarioAndLogin(nombre, email, telefono, 1, username, passwordHash);
-        res.send('<script>alert("Usuario creado exitosamente!"); window.location.href = "login"</script>');
+        res.send('<script>alert("usuario creado exitosamente!"); window.location.href = "login"</script>');
     } catch (e) {
         console.error(e);
         res.send('<script>alert("Error: Registro no fue completado"); window.location.href = "login"</script>');

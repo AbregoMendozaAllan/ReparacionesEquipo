@@ -1,0 +1,88 @@
+<%
+// Dummy data for preview
+const supportRequests = [
+    {
+        estado: "Pendiente",
+        descripcion_problema: "La laptop no enciende después de la última actualización.",
+        equipo: { tipo: "Laptop", marca: "Dell", serie: "D12345" }
+    },
+    {
+        estado: "En proceso",
+        descripcion_problema: "La impresora no responde al enviar documentos.",
+        equipo: { tipo: "Impresora", marca: "HP", serie: "HP98765" }
+    },
+    {
+        estado: "Resuelto",
+        descripcion_problema: "Monitor con problemas de color corregido.",
+        equipo: { tipo: "Monitor", marca: "LG", serie: "LG112233" }
+    }
+];
+%>
+
+<div class="support-card">
+    <h3>Solicitudes de Soporte</h3>
+
+    <% if (supportRequests.length > 0) { %>
+        <ul class="support-list">
+            <% supportRequests.forEach((request) => { %>
+                <li>
+                    <strong>Equipo:</strong> <%= `${request.equipo.tipo} ${request.equipo.marca}` %><br>
+                    <strong>Problema:</strong> <%= request.descripcion_problema.substring(0, 50) %>...<br>
+                    <strong>Estado:</strong> <%= request.estado %>
+                </li>
+            <% }); %>
+        </ul>
+    <% } else { %>
+        <p>No tienes solicitudes de soporte recientes.</p>
+    <% } %>
+
+    <a href="/support" class="support-button">Solicitar Soporte</a>
+    <a href="/support/all" class="view-all">Ver todas</a>
+</div>
+
+<style>
+    .support-card {
+        max-width: 400px;
+        margin: 20px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .support-list {
+        list-style: none;
+        padding: 0;
+        text-align: left;
+        font-size: 14px;
+    }
+
+    .support-list li {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .support-button, .view-all {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 10px 15px;
+        background-color: #007BFF;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+
+    .view-all {
+        background-color: #6c757d;
+    }
+
+    .support-button:hover {
+        background-color: #0056b3;
+    }
+
+    .view-all:hover {
+        background-color: #545b62;
+    }
+</style>

@@ -8,28 +8,21 @@ const pool = mysql.createPool({
     user: process.env.DB_USER || "root",
     password: process.env.DB_PASSWORD || "",
     database: process.env.DB_NAME || "crecer",
-    port: process.env.DB_PORT || 3306, 
     connectionLimit: 5,
 });
 
 export const executeQuery = async (query, params) => {
-    try {
-        const [row] = await pool.query(query, params);
-        return row;
-    } catch (e) {
-        console.error(`Fallo en la consulta: ${e.message}`);
-        throw e;
-    }
-};
+    const [row] = await pool.query(query, params);
+    return row;
+}
 
 export const testConnection = async () => {
     try {
         const conn = await pool.getConnection();
-        console.log("Conexión a la base de datos exitosa");
+        console.log("Conexion Exitosa");
         conn.release();
-        return true;
     } catch (e) {
-        console.error(`Fallo en la conexión a la base de datos: ${e.message}`);
+        console.error(`Se presento un error: ${e}`);
         throw e;
     }
-};
+}
