@@ -47,3 +47,6 @@ build/
 # Temp files
 *.swp
 *.swo
+
+# Ignore node_modules
+node_modules/
