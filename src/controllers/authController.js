@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import {
     createUsuarioAndLogin,
-    getEmailByEmail, getPasswordHashByUsername,
+    getEmailByEmail, getPasswordHashByUsername, getUserIdAndRoleId,
     getUsernameByUsername
 } from "../dao/userDao.js";
 import dotenv from "dotenv";
@@ -17,7 +17,7 @@ export const showRegisterForm = (req, res) => {
 
 export const registerUser = async (req, res) => {
     try {
-        const { nombre, email, telefono, username, password, confirmPassword} = req.body;
+        const { nombre, email, telefono, username, password, confirmPassword } = req.body;
 
         if (confirmPassword !== password) {
             return res.status(400).send("contraseñas deben ser iguales");
@@ -55,15 +55,12 @@ export const showLoginForm = (req, res) => {
 export const loginUser = async (req, res) => {
     try {
         const { username, password } = req.body;
-        console.log(username, password);
-        console.log(req.body);
         const user = await getUsernameByUsername(username);
         if (!user) {
             return res.status(401).send("Usuaro o contraseña invalido");
         }
         const [passwordHash] = await getPasswordHashByUsername(username);
         const { password_hash: storedHashedPassword } = passwordHash;
-        console.log(storedHashedPassword);
 
         const isMatch = await bcrypt.compare(password, storedHashedPassword);
 
@@ -71,7 +68,9 @@ export const loginUser = async (req, res) => {
             return res.status(401).send("Usuaro o contraseña invalido");
         }
 
-        const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
+        const [ads] = await getUserIdAndRoleId(username);
+        const { id_usuario: idUsuario, id_rol: idRol } = ads;
+        const token = jwt.sign({ userId: idUsuario, role: idRol }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
         res.cookie("token", token, { httpOnly: true, secure: true });
         res.redirect("/dashboard");
@@ -80,3 +79,8 @@ export const loginUser = async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 }
+
+export const logout = (req, res) => {
+    res.clearCookie('token');
+    res.redirect('/users/login');
+};

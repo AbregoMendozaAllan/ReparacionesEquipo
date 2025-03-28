@@ -35,7 +35,11 @@ export const createUsuarioAndLogin = async (nombre, email, telefono, idRol, user
     }
 };
 
-const existsUsername = async (username) => {
-    const query = "SELECT EXISTS(SELECT 1 FROM login WHERE username = ?) AS username_exists";
+export const getUserIdAndRoleId = async (username) => {
+    const query = `
+        SELECT l.id_usuario, u.id_rol FROM login l 
+        INNER JOIN usuarios u ON l.id_usuario = u.id_usuario
+        WHERE username = ?
+    `;
     return await executeQuery(query, [username]);
 };
