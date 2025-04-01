@@ -1,9 +1,10 @@
 import bcrypt from 'bcryptjs';
 import {
+    createBitacoraLogin,
     createUsuarioAndLogin,
     getEmailByEmail, getPasswordHashByUsername, getUserIdAndRoleId,
     getUsernameByUsername
-} from "../dao/userDao.js";
+} from "../dao/authDao.js";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 
@@ -23,20 +24,18 @@ export const registerUser = async (req, res) => {
             return res.status(400).send("contraseñas deben ser iguales");
         }
 
-        // check if username exists
         const [existingUsername] = await getUsernameByUsername(username);
         console.log(existingUsername);
         if (existingUsername) {
             return res.status(400).send("usuario ya en uso");
         }
-        // check if email exists
+
         const [existingEmail] = await getEmailByEmail(email);
         console.log(existingEmail);
         if (existingEmail) {
             return res.status(400).send("Correo electronico ya en uso");
         }
 
-        // Creates salt and hashes password
         const salt = await bcrypt.genSalt(SALT_ROUNDS);
         const passwordHash = await bcrypt.hash(password, salt);
 
@@ -52,35 +51,58 @@ export const showLoginForm = (req, res) => {
     res.render('login');
 }
 
+
 export const loginUser = async (req, res) => {
     try {
         const { username, password } = req.body;
         const user = await getUsernameByUsername(username);
+        const userAgent = req.headers['user-agent'];
+        const ipAdd = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
+        const logError = (errorMessage) => {
+            const errorLog =
+                'Error occurred during login attempt for user: ' + username +
+                '. Error message: ' + errorMessage +
+                '. IP Address: ' + ipAdd +
+                '. User Agent: ' + userAgent +
+                '. Timestamp: ' + new Date().toISOString();
+            return errorLog;
+        };
+
         if (!user) {
-            return res.status(401).send("Usuaro o contraseña invalido");
+            const errorLog = logError('Invalid username');
+            await createBitacoraLogin(username, ipAdd, 'FAILED', errorLog, userAgent);
+            return res.send('<script>alert("Error: Usuario o contraseña incorrectas!"); window.location.href = "/user/login"</script>');
         }
+
         const [passwordHash] = await getPasswordHashByUsername(username);
         const { password_hash: storedHashedPassword } = passwordHash;
 
         const isMatch = await bcrypt.compare(password, storedHashedPassword);
-
         if (!isMatch) {
-            return res.status(401).send("Usuaro o contraseña invalido");
+            const { errorLog } = logError(username, ipAdd, userAgent, 'Invalid password');
+            await createBitacoraLogin(username, ipAdd, 'FAILED', errorLog, userAgent);
+            return res.send('<script>alert("Error: Usuario o contraseña incorrectas!"); window.location.href = "/user/login"</script>');
         }
+
+        await createBitacoraLogin(username, ipAdd, 'SUCCESS', 'Null',userAgent);
 
         const [ads] = await getUserIdAndRoleId(username);
         const { id_usuario: idUsuario, id_rol: idRol } = ads;
         const token = jwt.sign({ userId: idUsuario, role: idRol }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
-        res.cookie("token", token, { httpOnly: true, secure: true });
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production'
+        });
         res.redirect("/dashboard");
     } catch (e) {
         console.error(e);
         res.status(500).send("Internal Server Error");
     }
-}
+};
 
 export const logout = (req, res) => {
     res.clearCookie('token');
-    res.redirect('/users/login');
+    res.redirect('/user/login');
 };

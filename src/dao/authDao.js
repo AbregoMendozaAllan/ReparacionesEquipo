@@ -43,3 +43,13 @@ export const getUserIdAndRoleId = async (username) => {
     `;
     return await executeQuery(query, [username]);
 };
+
+export const createBitacoraLogin = async (Usuario, ipAdd, status, error, userAgent) => {
+    try {
+        const query = `INSERT INTO bitacora_login (username, time_stamp, ip_add, status, error, user_agent)  
+    VALUES (?, NOW(), ?, ?, ?, ?);`;
+        await executeQuery(query, [Usuario, ipAdd, status, error, userAgent]);
+    } catch (e) {
+        console.log(e);
+    }
+};

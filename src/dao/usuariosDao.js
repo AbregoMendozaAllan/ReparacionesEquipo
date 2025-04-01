@@ -6,25 +6,25 @@ export const getAllUsuarios = async () => {
     return await executeQuery(query, []);
 };
 
-// Obtener usuario por ID
+// Obtener solicitante por ID
 export const getUsuarioById = async (id) => {
     const query = 'SELECT * FROM usuarios WHERE id_usuario = ?';
     return await executeQuery(query, [id]);
 };
 
-// Crear nuevo usuario
+// Crear nuevo solicitante
 export const createUsuario = async (nombre, email, telefono, rol) => {
     const query = 'INSERT INTO usuarios (nombre, email, telefono, rol) VALUES (?, ?, ?, ?)';
     return await executeQuery(query, [nombre, email, telefono, rol]);
 };
 
-// Actualizar usuario
+// Actualizar solicitante
 export const updateUsuario = async (id, nombre, email, telefono, rol) => {
     const query = 'UPDATE usuarios SET nombre = ?, email = ?, telefono = ?, rol = ? WHERE id_usuario = ?';
     return await executeQuery(query, [nombre, email, telefono, rol, id]);
 };
 
-// Eliminar usuario
+// Eliminar solicitante
 export const deleteUsuario = async (id) => {
     const query = 'DELETE FROM usuarios WHERE id_usuario = ?';
     return await executeQuery(query, [id]);

@@ -1,7 +1,7 @@
 INSERT INTO Roles (rol) VALUES
     ('Administrador'),
     ('Técnico'),
-    ('usuario Final');
+    ('solicitante Final');
 INSERT INTO Funciones (funcion) VALUES
     ('Gestionar Usuarios'),
     ('Gestionar Equipos'),
@@ -15,7 +15,7 @@ INSERT INTO Roles_Funciones (id_rol, id_funcion) VALUES
     (1, 4), -- Admin puede solicitar soporte
     (1, 5), -- Admin puede reparar equipos
     (2, 5), -- Técnico puede reparar equipos
-    (3, 4); -- usuario final puede solicitar soporte
+    (3, 4); -- solicitante final puede solicitar soporte
 INSERT INTO Usuarios (nombre, email, telefono, id_rol) VALUES
     ('Juan Pérez', 'juan@example.com', '123456789', 1),
     ('Ana López', 'ana@example.com', '987654321', 2),

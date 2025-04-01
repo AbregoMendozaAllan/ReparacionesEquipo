@@ -1,0 +1,105 @@
+<%
+// Dummy data for preview
+const supportRequests = [
+    {
+        estado: "Pendiente",
+        descripcion_problema: "La laptop no enciende después de la última actualización.",
+        equipo: { tipo: "Laptop", marca: "Dell", serie: "D12345" }
+    },
+    {
+        estado: "En proceso",
+        descripcion_problema: "La impresora no responde al enviar documentos.",
+        equipo: { tipo: "Impresora", marca: "HP", serie: "HP98765" }
+    },
+    {
+        estado: "Resuelto",
+        descripcion_problema: "Monitor con problemas de color corregido.",
+        equipo: { tipo: "Monitor", marca: "LG", serie: "LG112233" }
+    }
+];
+%>
+
+<h3>📋 Solicitudes Abiertas</h3>
+
+<% if (supportRequests.length > 0) { %>
+    <ul class="support-list">
+        <% supportRequests.forEach((request) => { %>
+            <li>
+                <strong>Equipo:</strong> <%= `${request.equipo.tipo} ${request.equipo.marca}` %> <br>
+                <strong>Problema:</strong> <%= request.descripcion_problema.substring(0, 50) %>... <br>
+                <strong>Estado:</strong> <span class="estado <%= request.estado.toLowerCase().replace(' ', '-') %>">
+                    <%= request.estado %>
+                </span>
+            </li>
+        <% }); %>
+    </ul>
+<% } else { %>
+    <p>No tienes solicitudes de soporte recientes.</p>
+<% } %>
+
+<div class="buttons-container">
+    <a href="/support" class="support-button">Solicitar Soporte</a>
+    <a href="/support/all" class="view-all">Ver Todas</a>
+</div>
+
+<style>
+    .support-list {
+        list-style: none;
+        padding: 0;
+        text-align: left;
+        font-size: 14px;
+    }
+
+    .support-list li {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .estado {
+        font-weight: bold;
+        padding: 3px 8px;
+        border-radius: 5px;
+    }
+
+    .estado.pendiente { background: #ffc107; color: #333; }
+    .estado.en-proceso { background: #17a2b8; color: white; }
+    .estado.resuelto { background: #28a745; color: white; }
+    .estado.cancelado { background: #dc3545; color: white; }
+
+    .buttons-container {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .support-button, .view-all {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 8px 12px;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 14px;
+        transition: background-color 0.2s;
+    }
+
+    .support-button {
+        background-color: #007BFF;
+    }
+
+    .support-button:hover {
+        background-color: #0056b3;
+    }
+
+    .view-all {
+        background-color: #6c757d;
+    }
+
+    .view-all:hover {
+        background-color: #545b62;
+    }
+</style>

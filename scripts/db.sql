@@ -163,15 +163,15 @@ CREATE TABLE `login` (
 ;
 CREATE TABLE `bitacora_login` (
                                   `id` INT(11) NOT NULL AUTO_INCREMENT,
-                                  `id_usuario` INT(11) NOT NULL,
+                                  `username` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_uca1400_ai_ci',
                                   `time_stamp` TIMESTAMP NOT NULL,
                                   `ip_add` VARCHAR(50) NULL DEFAULT '' COLLATE 'utf8mb4_uca1400_ai_ci',
                                   `status` ENUM('SUCESS','FAILED') NOT NULL COLLATE 'utf8mb4_uca1400_ai_ci',
                                   `error` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_uca1400_ai_ci',
                                   `user_agent` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_uca1400_ai_ci',
                                   PRIMARY KEY (`id`) USING BTREE,
-                                  INDEX `FK__usuarios` (`id_usuario`) USING BTREE,
-                                  CONSTRAINT `FK__usuarios` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON UPDATE NO ACTION ON DELETE NO ACTION
+                                  INDEX `FK_bitacora_login_login` (`username`) USING BTREE,
+                                  CONSTRAINT `FK_bitacora_login_login` FOREIGN KEY (`username`) REFERENCES `login` (`username`) ON UPDATE NO ACTION ON DELETE NO ACTION
 )
     COLLATE='utf8mb4_uca1400_ai_ci'
     ENGINE=InnoDB

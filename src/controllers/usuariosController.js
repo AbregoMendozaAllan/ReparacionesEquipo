@@ -11,7 +11,7 @@ export const mostrarUsuarios = async (req, res) => {
     }
 };
 
-// Mostrar detalle de un usuario por ID
+// Mostrar detalle de un solicitante por ID
 export const mostrarUsuarioPorId = async (req, res) => {
     try {
         const { id } = req.params;
@@ -21,29 +21,29 @@ export const mostrarUsuarioPorId = async (req, res) => {
         }
         res.render("usuarios/usuarios-detalle", { usuario });
     } catch (error) {
-        console.error("Error al obtener el usuario:", error);
-        res.status(500).send("Error al obtener el usuario");
+        console.error("Error al obtener el solicitante:", error);
+        res.status(500).send("Error al obtener el solicitante");
     }
 };
 
-// Mostrar formulario para crear usuario
+// Mostrar formulario para crear solicitante
 export const formularioCrearUsuario = (req, res) => {
     res.render("usuarios/usuarios-crear");
 };
 
-// Crear nuevo usuario
+// Crear nuevo solicitante
 export const crearUsuarioNuevo = async (req, res) => {
     try {
         const { nombre, email, telefono, rol } = req.body;
         await createUsuario(nombre, email, telefono, rol);
         res.redirect("/usuarios");
     } catch (error) {
-        console.error("Error al crear usuario:", error);
-        res.status(500).send("Error al crear usuario");
+        console.error("Error al crear solicitante:", error);
+        res.status(500).send("Error al crear solicitante");
     }
 };
 
-// Mostrar formulario para editar usuario
+// Mostrar formulario para editar solicitante
 export const formularioEditarUsuario = async (req, res) => {
     try {
         const { id } = req.params;
@@ -53,12 +53,12 @@ export const formularioEditarUsuario = async (req, res) => {
         }
         res.render("usuarios/usuarios-editar", { usuario });
     } catch (error) {
-        console.error("Error al obtener usuario para editar:", error);
-        res.status(500).send("Error al obtener usuario para editar");
+        console.error("Error al obtener solicitante para editar:", error);
+        res.status(500).send("Error al obtener solicitante para editar");
     }
 };
 
-// Actualizar usuario
+// Actualizar solicitante
 export const actualizarUsuario = async (req, res) => {
     try {
         const { id } = req.params;
@@ -66,19 +66,19 @@ export const actualizarUsuario = async (req, res) => {
         await updateUsuario(id, nombre, email, telefono, rol);
         res.redirect("/usuarios");
     } catch (error) {
-        console.error("Error al actualizar usuario:", error);
-        res.status(500).send("Error al actualizar usuario");
+        console.error("Error al actualizar solicitante:", error);
+        res.status(500).send("Error al actualizar solicitante");
     }
 };
 
-// Eliminar usuario
+// Eliminar solicitante
 export const eliminarUsuario = async (req, res) => {
     try {
         const { id } = req.params;
         await deleteUsuario(id);
         res.redirect("/usuarios");
     } catch (error) {
-        console.error("Error al eliminar usuario:", error);
-        res.status(500).send("Error al eliminar usuario");
+        console.error("Error al eliminar solicitante:", error);
+        res.status(500).send("Error al eliminar solicitante");
     }
 };
