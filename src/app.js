@@ -14,6 +14,7 @@ import facturasRoutes from "./routes/facturasRoutes.js";
 import inventariosRoutes from "./routes/inventariosRoutes.js";
 import historialReparacionesRoutes from "./routes/historialReparacionesRoutes.js";
 import cookieParser from "cookie-parser";
+import soporteRouter from "./routes/soporteRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -35,6 +36,7 @@ app.use(cookieParser());
 
 // Rutas
 app.use("/user", authRoutes);
+app.use("/soporte", soporteRouter);
 app.use("/dashboard", dashboadRoutes);
 app.use("/clientes", clientesRoutes);
 app.use("/empleados", empleadosRoutes);

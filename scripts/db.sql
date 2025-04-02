@@ -56,12 +56,17 @@ CREATE TABLE `equipos` (
                            `modelo` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_uca1400_ai_ci',
                            `serie` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_uca1400_ai_ci',
                            `estado` ENUM('Disponible','Asignado','En reparación','Descartado') NOT NULL COLLATE 'utf8mb4_uca1400_ai_ci',
+                           `id_usuario_asignado` INT(11) NULL DEFAULT NULL,
                            PRIMARY KEY (`id_equipo`) USING BTREE,
-                           UNIQUE INDEX `serie` (`serie`) USING BTREE
+                           UNIQUE INDEX `serie` (`serie`) USING BTREE,
+                           INDEX `FK_equipos_usuarios` (`id_usuario_asignado`) USING BTREE,
+                           CONSTRAINT `FK_equipos_usuarios` FOREIGN KEY (`id_usuario_asignado`) REFERENCES `usuarios` (`id_usuario`) ON UPDATE NO ACTION ON DELETE NO ACTION
 )
     COLLATE='utf8mb4_uca1400_ai_ci'
     ENGINE=InnoDB
+    AUTO_INCREMENT=4
 ;
+
 CREATE TABLE `asignaciones` (
                                 `id_asignacion` INT(11) NOT NULL AUTO_INCREMENT,
                                 `id_equipo` INT(11) NOT NULL,
