@@ -36,7 +36,7 @@ app.use(cookieParser());
 
 // Rutas
 app.use("/user", authRoutes);
-app.use("/soporte", soporteRouter);
+//app.use("/soporte", soporteRouter);
 app.use("/dashboard", dashboadRoutes);
 app.use("/clientes", clientesRoutes);
 app.use("/empleados", empleadosRoutes);

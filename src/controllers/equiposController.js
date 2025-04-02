@@ -37,12 +37,14 @@ import {
     res.render("equipos/crear");
   };
   
-  // Crear nuevo equipo
+  // Crear nuevo equipo -- funciona bien
   export const crearNuevoEquipo = async (req, res) => {
     try {
-      const { nombre, descripcion, fecha_creacion } = req.body;
-      await createEquipo(nombre, descripcion, fecha_creacion);
-      res.redirect("/equipos");
+      const { tipo, marca, modelo, serie, estado, username } = req.body;
+
+
+      await createEquipo(tipo, marca, modelo, serie, estado, username);
+      res.send('<script>alert("Equipo ingresado exitosamente!"); window.location.href = "/equipos"</script>');
     } catch (error) {
       console.error("Error al crear equipo:", error);
       res.status(500).send("Error al crear equipo");
@@ -59,7 +61,7 @@ import {
       }
       res.render("equipos/editar", { equipo });
     } catch (error) {
-      console.error("Error al obtener equipo para editar:", error);
+      console.error("Equipo no se pudo ingresar", error);
       res.status(500).send("Error al obtener equipo para editar");
     }
   };

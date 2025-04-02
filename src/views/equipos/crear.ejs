@@ -1,23 +1,44 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Crear Equipo</title>
+  <title>Solicitud de Soporte</title>
 </head>
 <body>
-  <h1>Crear Nuevo Equipo</h1>
-  <form action="/equipos/create" method="POST">
-    <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" name="nombre" required>
-    <br>
-    <label for="descripcion">Descripción:</label>
-    <textarea id="descripcion" name="descripcion" required></textarea>
-    <br>
-    <label for="fecha_creacion">Fecha de Creación:</label>
-    <input type="date" id="fecha_creacion" name="fecha_creacion" required>
-    <br>
-    <button type="submit">Crear Equipo</button>
-  </form>
+<h2>Solicitud de Soporte</h2>
+
+<form action="/equipos/create" method="POST">
+
+  <label for="tipo">Tipo:</label>
+  <select id="tipo" name="tipo" required>
+    <option value="Laptop">Laptop</option>
+    <option value="PC">PC</option>
+    <option value="Monitor">Monitor</option>
+    <option value="Impresora">Impresora</option>
+    <option value="Otro">Otro</option>
+  </select><br>
+
+  <label>Marca:</label>
+  <input type="text" name="marca" required><br>
+
+  <label>Modelo:</label>
+  <input type="text" name="modelo" required><br>
+
+  <label>Serie:</label>
+  <input type="text" name="serie" required><br>
+
+  <label>Estado:</label>
+  <select id="estado" name="estado" required>
+    <option value="Disponible">Disponible</option>
+    <option value="Asignado">Asignado</option>
+    <option value="En reparacion">En Reparacion</option>
+    <option value="Descartado">Descartado</option>
+  </select ><br>
+
+  <label>Usuario:</label>
+  <input type="text" name="username"><br>
+
+  <button type="submit">Registrar</button>
+</form>
+
 </body>
 </html>

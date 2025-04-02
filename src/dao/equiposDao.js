@@ -13,9 +13,9 @@ export const getEquipoById = async (id) => {
 };
 
 // Crear un nuevo equipo
-export const createEquipo = async (nombre, descripcion, fecha_creacion) => {
-  const query = "INSERT INTO equipos (nombre, descripcion, fecha_creacion) VALUES (?, ?, ?)";
-  return await executeQuery(query, [nombre, descripcion, fecha_creacion]);
+export const createEquipo = async (tipo, marca, modelo, serie, estado, usuarioId) => {
+  const query = "INSERT INTO equipos (tipo, marca, modelo, serie, estado, id_usuario_asignado) VALUES (?, ?, ?, ?, ?, ?)";
+  return await executeQuery(query, [tipo, marca, modelo, serie, estado, usuarioId]);
 };
 
 // Actualizar un equipo

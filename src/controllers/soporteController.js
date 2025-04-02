@@ -1,5 +1,4 @@
 import {createEquipoAndSolicitud} from "../dao/soporteDao.js";
-import jwt from "jsonwebtoken";
 import {verifyToken} from "../middleware/authMiddleware.js";
 
 export const showSoporte = (req, res) => {

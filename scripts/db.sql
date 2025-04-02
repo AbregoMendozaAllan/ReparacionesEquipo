@@ -50,7 +50,6 @@ CREATE TABLE `usuarios` (
 ;
 CREATE TABLE `equipos` (
                            `id_equipo` INT(11) NOT NULL AUTO_INCREMENT,
-                           `equipo` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_uca1400_ai_ci',
                            `tipo` ENUM('Laptop','PC','Monitor','Impresora','Otro') NOT NULL COLLATE 'utf8mb4_uca1400_ai_ci',
                            `marca` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_uca1400_ai_ci',
                            `modelo` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_uca1400_ai_ci',
@@ -66,6 +65,7 @@ CREATE TABLE `equipos` (
     ENGINE=InnoDB
     AUTO_INCREMENT=4
 ;
+
 
 CREATE TABLE `asignaciones` (
                                 `id_asignacion` INT(11) NOT NULL AUTO_INCREMENT,
