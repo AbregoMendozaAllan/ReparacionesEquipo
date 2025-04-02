@@ -1,12 +1,6 @@
-import {
-    getAllEquipos,
-    getEquipoById,
-    createEquipo,
-    updateEquipo,
-    deleteEquipo,
-  } from "../dao/equiposDao.js";
-  
-  // Mostrar lista de equipos
+import {createEquipo, deleteEquipo, getAllEquipos, getEquipoById, updateEquipo,} from "../dao/equiposDao.js";
+
+// Mostrar lista de equipos
   export const mostrarEquipos = async (req, res) => {
     try {
       const equipos = await getAllEquipos();
@@ -40,10 +34,10 @@ import {
   // Crear nuevo equipo -- funciona bien
   export const crearNuevoEquipo = async (req, res) => {
     try {
-      const { tipo, marca, modelo, serie, estado, username } = req.body;
+      const { tipo, marca, modelo, serie, estado, usuarioId } = req.body;
 
 
-      await createEquipo(tipo, marca, modelo, serie, estado, username);
+      await createEquipo(tipo, marca, modelo, serie, estado, usuarioId);
       res.send('<script>alert("Equipo ingresado exitosamente!"); window.location.href = "/equipos"</script>');
     } catch (error) {
       console.error("Error al crear equipo:", error);

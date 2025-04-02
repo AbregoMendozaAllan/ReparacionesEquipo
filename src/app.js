@@ -1,20 +1,12 @@
 import dotenv from "dotenv";
 import express from "express";
 import path from "path";
-import { fileURLToPath } from "url";
-import { testConnection } from "./config/db.js";
+import {fileURLToPath} from "url";
+import {testConnection} from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import dashboadRoutes from "./routes/dashboadRoutes.js";
-import clientesRoutes from "./routes/clientes.routes.js";
-import empleadosRoutes from "./routes/empleados.routes.js";
 import equiposRoutes from "./routes/equipos.routes.js";
-import reparacionesRoutes from "./routes/reparaciones.routes.js";
-import usuariosRoutes from "./routes/usuarios.routes.js";
-import facturasRoutes from "./routes/facturasRoutes.js";
-import inventariosRoutes from "./routes/inventariosRoutes.js";
-import historialReparacionesRoutes from "./routes/historialReparacionesRoutes.js";
 import cookieParser from "cookie-parser";
-import soporteRouter from "./routes/soporteRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -38,14 +30,12 @@ app.use(cookieParser());
 app.use("/user", authRoutes);
 //app.use("/soporte", soporteRouter);
 app.use("/dashboard", dashboadRoutes);
-app.use("/clientes", clientesRoutes);
-app.use("/empleados", empleadosRoutes);
 app.use("/equipos", equiposRoutes);
-app.use("/reparaciones", reparacionesRoutes);
-app.use("/usuarios", usuariosRoutes);
-app.use("/facturas", facturasRoutes);
-app.use("/inventarios", inventariosRoutes);
-app.use("/historial-reparaciones", historialReparacionesRoutes);
+
+
+
+
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

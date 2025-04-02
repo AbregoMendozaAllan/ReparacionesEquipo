@@ -2,7 +2,9 @@ import bcrypt from 'bcryptjs';
 import {
     createBitacoraLogin,
     createUsuarioAndLogin,
-    getEmailByEmail, getPasswordHashByUsername, getUserIdAndRoleId,
+    getEmailByEmail,
+    getPasswordHashByUsername,
+    getUserIdAndRoleId,
     getUsernameByUsername
 } from "../dao/authDao.js";
 import dotenv from "dotenv";
