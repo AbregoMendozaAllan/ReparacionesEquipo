@@ -4,6 +4,7 @@ import {createEquipo, deleteEquipo, getAllEquipos, getEquipoById,} from "../dao/
   export const mostrarEquipos = async (req, res) => {
     try {
       const equipos = await getAllEquipos();
+      console.log("Datos de equipos:", equipos);
       res.render("equipos/listado", { equipos });
     } catch (error) {
       console.error("Error al obtener los equipos:", error);

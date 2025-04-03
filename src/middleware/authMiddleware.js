@@ -13,12 +13,10 @@ export const authenticateToken = (req, res, next) => {
     });
 }
 
-export const verifyToken = async (req, res) => {
-    try {
-        const { userId, role } = await verifyToken(req);
-        console.log("Authenticated user:", userId, "Role:", role);
-    } catch (err) {
-        console.error(err.message);
-        res.status(403).send("Unauthorized");
-    }
+export const getUserFromToken = async (req) => {
+    const token = req.cookies?.token;
+    if (!token) throw new Error("No token provided");
+
+    const { userId: idUsuario, role: idRol } = jwt.verify(token, process.env.JWT_SECRET);
+    return { idUsuario, idRol };
 };

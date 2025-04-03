@@ -7,6 +7,7 @@ import authRoutes from "./routes/authRoutes.js";
 import dashboadRoutes from "./routes/dashboadRoutes.js";
 import equiposRoutes from "./routes/equipos.routes.js";
 import cookieParser from "cookie-parser";
+import soporteRouter from "./routes/soporteRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -28,7 +29,7 @@ app.use(cookieParser());
 
 // Rutas
 app.use("/user", authRoutes);
-//app.use("/soporte", soporteRouter);
+app.use("/soporte", soporteRouter);
 app.use("/dashboard", dashboadRoutes);
 app.use("/equipos", equiposRoutes);
 

@@ -11,18 +11,23 @@
   <table>
     <thead>
       <tr>
-        <th>Nombre</th>
-        <th>Descripción</th>
-        <th>Fecha de Creación</th>
-        <th>Acciones</th>
+        <th>id_equipo</th>
+        <th>tipo</th>
+        <th>marca</th>
+        <th>serie</th>
+        <th>estado</th>
+        <th>id_usuario_asignado</th>
       </tr>
     </thead>
     <tbody>
       <% equipos.forEach(equipo => { %>
         <tr>
-          <td><%= equipo.nombre %></td>
-          <td><%= equipo.descripcion %></td>
-          <td><%= equipo.fecha_creacion %></td>
+          <td><%= equipo.id_equipo %></td>
+          <td><%= equipo.tipo %></td>
+          <td><%= equipo.marca %></td>
+          <td><%= equipo.serie %></td>
+          <td><%= equipo.estado %></td>
+          <td><%= equipo.id_usuario_asignado %></td>
           <td>
             <a href="/equipos/edit/<%= equipo.id_equipo %>">Editar</a>
             <form action="/equipos/delete/<%= equipo.id_equipo %>" method="POST">
