@@ -2,11 +2,12 @@
 <html lang="es">
 <head>
     <title>Crear Reparación</title>
+    <link rel="stylesheet" href="/static/styles/styles.css">
 </head>
 <body>
     <h2>Crear Reparación</h2>
 
-    <form action="/crear-reparacion" method="POST">
+    <form action="/reparaciones/crear" method="POST">
         <label for="id_equipo">Equipo:</label>
         <select name="id_equipo" required>
             <% equipos.forEach(equipo => { %>
@@ -31,6 +32,7 @@
         <button type="submit">Crear Reparación</button>
     </form>
 
-    <a href="/lista-reparaciones">Volver a la lista de reparaciones</a>
+    <a href="/reparaciones/listado">Volver a la lista de reparaciones</a>
 </body>
 </html>
+

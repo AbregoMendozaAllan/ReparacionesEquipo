@@ -1,15 +1,15 @@
-import { vistaCrearReparacion, crearReparacion, cambiarEstado } from '../controllers/reparacionesController.js';
 import express from 'express';
+import { vistaCrearReparacion, crearReparacion, listarReparaciones } from '../controllers/reparacionesController.js';
 
 const router = express.Router();
 
-// Vista para crear reparaciones
-router.get('/crear-reparacion', vistaCrearReparacion);
+// Ruta para mostrar el formulario de creación de reparaciones (crear.ejs)
+router.get('/crear', vistaCrearReparacion);
 
-// Crear una nueva reparación
-router.post('/crear-reparacion', crearReparacion);
+// Ruta para procesar el formulario y crear la reparación
+router.post('/crear', crearReparacion);
 
-// Cambiar estado de reparación
-router.post('/cambiar-estado/:id_reparacion', cambiarEstado);
+// Ruta para listar las reparaciones (listado.ejs)
+router.get('/listado', listarReparaciones);
 
 export default router;

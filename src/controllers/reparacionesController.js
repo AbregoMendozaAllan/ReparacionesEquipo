@@ -1,39 +1,38 @@
-import * as ReparacionDAO from '../dao/reparacionesDao.js'; // Importa correctamente el DAO
+import { ReparacionDAO } from '../dao/reparacionesDao.js';
 
-// Obtener la vista para crear reparaciones
+// Controlador para mostrar el formulario de creación de reparaciones
 export const vistaCrearReparacion = async (req, res) => {
     try {
+        const equipos = await ReparacionDAO.obtenerEquipos();
+        const solicitudes = await ReparacionDAO.obtenerSolicitudesSoporte();  // Cambio aquí para llamar la función correcta
         const tecnicos = await ReparacionDAO.obtenerTecnicos();
-        res.render('crear-reparacion', { tecnicos });
+
+        res.render('reparaciones/crear', { equipos, solicitudes, tecnicos });
     } catch (error) {
-        console.error('Error al obtener técnicos:', error);
-        res.status(500).send('Error al obtener técnicos');
+        console.error("Error al cargar la vista de creación de reparación:", error);
+        res.status(500).send("Error interno del servidor");
     }
 };
 
-// Crear una nueva reparación
+// Controlador para procesar la creación de una reparación
 export const crearReparacion = async (req, res) => {
-    const { id_equipo, id_solicitud, id_tecnico_asignado } = req.body;
-
     try {
+        const { id_equipo, id_solicitud, id_tecnico_asignado } = req.body;
         await ReparacionDAO.crearReparacion(id_equipo, id_solicitud, id_tecnico_asignado);
-        res.redirect('/reparaciones/lista-reparaciones');
+        res.redirect('/reparaciones/listado');
     } catch (error) {
-        console.error('Error al crear la reparación:', error);
-        res.status(500).send('Error al crear la reparación');
+        console.error("Error al crear la reparación:", error);
+        res.status(500).send("Error al crear la reparación");
     }
 };
 
-// Cambiar estado de reparación
-export const cambiarEstado = async (req, res) => {
-    const { nuevo_estado } = req.body;
-    const { id_reparacion } = req.params;
-
+// Controlador para listar reparaciones
+export const listarReparaciones = async (req, res) => {
     try {
-        await ReparacionDAO.cambiarEstadoReparacion(id_reparacion, nuevo_estado);
-        res.redirect('/reparaciones/lista-reparaciones');
+        const reparaciones = await ReparacionDAO.obtenerReparaciones();
+        res.render('reparaciones/listado', { reparaciones });
     } catch (error) {
-        console.error('Error al cambiar el estado:', error);
-        res.status(500).send('Error al cambiar el estado');
+        console.error("Error al obtener la lista de reparaciones:", error);
+        res.status(500).send("Error al obtener la lista de reparaciones");
     }
 };

@@ -30,6 +30,7 @@ app.use(cookieParser());
 
 // Rutas
 app.use("/user", authRoutes);
+app.use('/reparaciones', reparacionesRoutes);
 app.use("/soporte", soporteRouter);
 app.use("/dashboard", dashboadRoutes);
 app.use("/equipos", equiposRoutes);
