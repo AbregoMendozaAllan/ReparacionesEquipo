@@ -17,6 +17,7 @@
         <th>serie</th>
         <th>estado</th>
         <th>id_usuario_asignado</th>
+        <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
@@ -30,7 +31,7 @@
           <td><%= equipo.id_usuario_asignado %></td>
           <td>
             <a href="/equipos/edit/<%= equipo.id_equipo %>">Editar</a>
-            <form action="/equipos/delete/<%= equipo.id_equipo %>" method="POST">
+            <form action="/equipos/delete/<%= equipo.id_equipo %>" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este equipo?');">
               <button type="submit">Eliminar</button>
             </form>
           </td>

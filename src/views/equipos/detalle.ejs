@@ -7,11 +7,15 @@
 </head>
 <body>
   <h1>Detalle del Equipo</h1>
-  <p><strong>Nombre:</strong> <%= equipo.nombre %></p>
-  <p><strong>Descripción:</strong> <%= equipo.descripcion %></p>
-  <p><strong>Fecha de Creación:</strong> <%= equipo.fecha_creacion %></p>
+  <p><strong>ID:</strong> <%= equipo.id_equipo %></p>
+  <p><strong>Tipo:</strong> <%= equipo.tipo %></p>
+  <p><strong>Marca:</strong> <%= equipo.marca %></p>
+  <p><strong>Modelo:</strong> <%= equipo.modelo %></p>
+  <p><strong>Serie:</strong> <%= equipo.serie %></p>
+  <p><strong>Estado:</strong> <%= equipo.estado %></p>
+  <p><strong>ID de Usuario Asignado:</strong> <%= equipo.id_usuario_asignado %></p>
   <a href="/equipos/edit/<%= equipo.id_equipo %>">Editar</a>
-  <form action="/equipos/delete/<%= equipo.id_equipo %>" method="POST">
+  <form action="/equipos/delete/<%= equipo.id_equipo %>" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este equipo?');">
     <button type="submit">Eliminar</button>
   </form>
 </body>

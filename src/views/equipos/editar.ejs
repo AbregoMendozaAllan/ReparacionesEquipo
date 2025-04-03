@@ -8,15 +8,35 @@
 <body>
   <h1>Editar Equipo</h1>
   <form action="/equipos/edit/<%= equipo.id_equipo %>" method="POST">
-    <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" name="nombre" value="<%= equipo.nombre %>" required>
-    <br>
-    <label for="descripcion">Descripción:</label>
-    <textarea id="descripcion" name="descripcion" required><%= equipo.descripcion %></textarea>
-    <br>
-    <label for="fecha_creacion">Fecha de Creación:</label>
-    <input type="date" id="fecha_creacion" name="fecha_creacion" value="<%= equipo.fecha_creacion %>" required>
-    <br>
+    <label for="tipo">Tipo:</label>
+    <select id="tipo" name="tipo" required>
+      <option value="Laptop" <%= equipo.tipo === 'Laptop' ? 'selected' : '' %>>Laptop</option>
+      <option value="PC" <%= equipo.tipo === 'PC' ? 'selected' : '' %>>PC</option>
+      <option value="Monitor" <%= equipo.tipo === 'Monitor' ? 'selected' : '' %>>Monitor</option>
+      <option value="Impresora" <%= equipo.tipo === 'Impresora' ? 'selected' : '' %>>Impresora</option>
+      <option value="Otro" <%= equipo.tipo === 'Otro' ? 'selected' : '' %>>Otro</option>
+    </select><br>
+
+    <label for="marca">Marca:</label>
+    <input type="text" id="marca" name="marca" value="<%= equipo.marca %>" required><br>
+
+    <label for="modelo">Modelo:</label>
+    <input type="text" id="modelo" name="modelo" value="<%= equipo.modelo %>" required><br>
+
+    <label for="serie">Serie:</label>
+    <input type="text" id="serie" name="serie" value="<%= equipo.serie %>" required><br>
+
+    <label for="estado">Estado:</label>
+    <select id="estado" name="estado" required>
+      <option value="Disponible" <%= equipo.estado === 'Disponible' ? 'selected' : '' %>>Disponible</option>
+      <option value="Asignado" <%= equipo.estado === 'Asignado' ? 'selected' : '' %>>Asignado</option>
+      <option value="En reparacion" <%= equipo.estado === 'En reparacion' ? 'selected' : '' %>>En Reparación</option>
+      <option value="Descartado" <%= equipo.estado === 'Descartado' ? 'selected' : '' %>>Descartado</option>
+    </select><br>
+
+    <label for="usuarioId">ID de Usuario Asignado:</label>
+    <input type="text" id="usuarioId" name="usuarioId" value="<%= equipo.id_usuario_asignado %>"><br>
+
     <button type="submit">Actualizar Equipo</button>
   </form>
 </body>

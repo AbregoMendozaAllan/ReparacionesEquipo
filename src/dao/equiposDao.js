@@ -1,4 +1,4 @@
-import {executeQuery} from "../config/db.js";
+import { executeQuery } from "../config/db.js";
 
 // Obtener todos los equipos
 export const getAllEquipos = async () => {
@@ -18,6 +18,11 @@ export const createEquipo = async (tipo, marca, modelo, serie, estado, usuarioId
   return await executeQuery(query, [tipo, marca, modelo, serie, estado, usuarioId]);
 };
 
+// Actualizar un equipo existente
+export const updateEquipo = async (id, tipo, marca, modelo, serie, estado, usuarioId) => {
+  const query = "UPDATE equipos SET tipo = ?, marca = ?, modelo = ?, serie = ?, estado = ?, id_usuario_asignado = ? WHERE id_equipo = ?";
+  return await executeQuery(query, [tipo, marca, modelo, serie, estado, usuarioId, id]);
+};
 
 // Eliminar un equipo
 export const deleteEquipo = async (id) => {
