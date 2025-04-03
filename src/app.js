@@ -1,13 +1,14 @@
 import dotenv from "dotenv";
 import express from "express";
 import path from "path";
-import {fileURLToPath} from "url";
-import {testConnection} from "./config/db.js";
+import { fileURLToPath } from "url";
+import { testConnection } from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import dashboadRoutes from "./routes/dashboadRoutes.js";
 import equiposRoutes from "./routes/equipos.routes.js";
-import cookieParser from "cookie-parser";
 import soporteRouter from "./routes/soporteRoutes.js";
+import reparacionesRoutes from "./routes/reparacionesRoutes.js";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 const app = express();
@@ -32,11 +33,7 @@ app.use("/user", authRoutes);
 app.use("/soporte", soporteRouter);
 app.use("/dashboard", dashboadRoutes);
 app.use("/equipos", equiposRoutes);
-
-
-
-
-
+app.use("/reparaciones", reparacionesRoutes);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
