@@ -53,3 +53,26 @@ export const createBitacoraLogin = async (Usuario, ipAdd, status, error, userAge
         console.log(e);
     }
 };
+
+export const getAllFromUsername = async (userId) => {
+    const query = `
+        SELECT l.username, u.nombre, u.email, u.telefono, r.rol, l.ultimo_login FROM usuarios u
+            INNER JOIN login l ON l.id_usuario = u.id_usuario
+            INNER JOIN roles r ON r.id_rol = u.id_rol
+            WHERE u.id_usuario = ?
+        `;
+    return await executeQuery(query, [userId]);
+};
+
+export const updateLastLogin = async (username) => {
+    const query = `UPDATE login SET ultimo_login = NOW() WHERE username = ?;`;
+    await executeQuery(query, [username]);
+};
+
+export const updateUsuarioById = async (id, email, telefono) => {
+    const query = `
+        UPDATE usuarios SET email = ?, telefono = ?
+        WHERE id_usuario = ?;
+        `;
+    await executeQuery(query, [email, telefono, id]);
+};

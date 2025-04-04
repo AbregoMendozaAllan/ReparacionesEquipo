@@ -1,6 +1,5 @@
 import express from "express";
 import * as EquiposController from "../controllers/equiposController.js";
-import {mostrarEquipoPorId} from "../controllers/equiposController.js";
 
 const router = express.Router();
 

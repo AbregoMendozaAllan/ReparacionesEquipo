@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Información del Usuario</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+<body>
+<div class="section">
+    <div class="container">
+        <h1 class="title">Perfil del Usuario</h1>
+
+        <div class="box">
+
+            <div class="field">
+                <label class="label">👤 Nombre:</label>
+                <div class="control">
+                    <input class="input" value="<%= user.nombre %>" readonly disabled>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">👤 Nombre de usuario:</label>
+                <div class="control">
+                    <input class="input" value="<%= user.username %>" readonly disabled>
+                </div>
+            </div>
+
+            <form action="/user/perfil" method="POST" id="updateForm">
+
+                <div class="field">
+                    <label class="label">📧 Email</label>
+                    <div class="control">
+                        <input class="input" type="email" name="email" id="emailInput" value="<%= user.email %>" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">📞 Teléfono</label>
+                    <div class="control">
+                        <input class="input" type="text" name="telefono" id="telefonoInput" value="<%= user.telefono %>">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">🔐 Rol:</label>
+                    <div class="control">
+                        <input class="input" value="<%= user.rol %>" readonly disabled>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">🕒 Último inicio de sesión:</label>
+                    <div class="control">
+                        <input class="input" value="<%= new Date(user.ultimo_login).toLocaleString() %>" readonly disabled>
+                    </div>
+                </div>
+
+                <div class="field" id="saveBtnContainer" style="display: none;">
+                    <button class="button is-success" type="submit">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+
+        <a class="button is-link" href="/dashboard">Volver al Dashboard</a>
+    </div>
+</div>
+
+<script>
+    const emailInput = document.getElementById('emailInput');
+    const telefonoInput = document.getElementById('telefonoInput');
+    const saveBtnContainer = document.getElementById('saveBtnContainer');
+
+    const originalEmail = emailInput.value;
+    const originalTelefono = telefonoInput.value;
+
+    function checkChanges() {
+        if (emailInput.value !== originalEmail || telefonoInput.value !== originalTelefono) {
+            saveBtnContainer.style.display = 'block';
+        } else {
+            saveBtnContainer.style.display = 'none';
+        }
+    }
+
+    emailInput.addEventListener('input', checkChanges);
+    telefonoInput.addEventListener('input', checkChanges);
+</script>
+
+</body>
+</html>

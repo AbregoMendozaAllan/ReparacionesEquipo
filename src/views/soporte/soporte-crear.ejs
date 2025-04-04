@@ -2,6 +2,23 @@
 <html lang="en">
 <head>
     <title>Solicitud de Soporte</title>
+    <script>
+        function updateEquipoDetails() {
+            const equipos = <%- JSON.stringify(equipos) %>;
+            const selectedId = document.getElementById("equipoId").value;
+            const equipo = equipos.find(eq => eq.id_equipo == selectedId);
+
+            if (equipo) {
+                document.getElementById("tipo").value = equipo.tipo;
+                document.getElementById("modelo").value = equipo.modelo;
+                document.getElementById("serie").value = equipo.serie;
+            } else {
+                document.getElementById("tipo").value = "";
+                document.getElementById("modelo").value = "";
+                document.getElementById("serie").value = "";
+            }
+        }
+    </script>
 </head>
 <body>
 <h2>Solicitud de Soporte</h2>
@@ -9,10 +26,26 @@
 <form action="/soporte/crear" method="POST">
 
     <label>ID de Equipo:</label>
-    <input type="text" name="equipoId" required><br>
+    <select name="equipoId" id="equipoId" onchange="updateEquipoDetails()" required>
+        <option value="">Seleccione un equipo</option>
+        <% equipos.forEach(equipo => { %>
+            <option value="<%= equipo.id_equipo %>">
+                <%= equipo.id_equipo %> - <%= equipo.tipo %> - <%= equipo.modelo %>
+            </option>
+        <% }); %>
+    </select><br>
+
+    <label>Tipo:</label>
+    <input type="text" id="tipo" readonly><br>
+
+    <label>Modelo:</label>
+    <input type="text" id="modelo" readonly><br>
+
+    <label>Serie:</label>
+    <input type="text" id="serie" readonly><br>
 
     <label>Descripcion de Problema:</label>
-    <input type="text" name="problema" required>
+    <input type="text" name="problema" required><br>
 
     <button type="submit">Registrar</button>
 </form>

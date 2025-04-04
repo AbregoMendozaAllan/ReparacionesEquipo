@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Solicitudes Completadas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+<body>
+<div class="section">
+    <div class="container">
+        <h1 class="title">📋 Solicitudes Completadas</h1>
+
+        <% if (solicitudes.length > 0) { %>
+            <div class="table-container">
+                <table class="table is-striped is-hoverable is-fullwidth">
+                    <thead>
+                    <tr>
+                        <th>🖥️ Equipo</th>
+                        <th>📝 Descripción</th>
+                        <th>📅 Fecha de Solicitud</th>
+                        <th>📌 Estado</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% solicitudes.forEach(solicitud => { %>
+                        <tr>
+                            <td><%= solicitud.equipo %></td>
+                            <td><%= solicitud.descripcion_problema %></td>
+                            <td><%= new Date(solicitud.fecha_solicitud).toLocaleString() %></td>
+                            <td>
+                                <span class="tag
+                                    <%= solicitud.estado === 'Resuelto' ? 'is-success' : 'is-danger' %>">
+                                    <%= solicitud.estado %>
+                                </span>
+                            </td>
+                        </tr>
+                    <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        <% } else { %>
+            <p>No hay solicitudes completadas para mostrar.</p>
+        <% } %>
+
+        <a class="button is-link mt-4" href="/dashboard">Volver al Dashboard</a>
+    </div>
+</div>
+</body>
+</html>

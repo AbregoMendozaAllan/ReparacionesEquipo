@@ -21,14 +21,14 @@ const supportRequests = [
 
 <h3>📋 Solicitudes Recientes</h3>
 
-<% if (supportRequests.length > 0) { %>
+<% if (solicitudes.length > 0) { %>
     <ul class="support-list">
-        <% supportRequests.forEach((request) => { %>
+        <% solicitudes.forEach((solicitud) => { %>
             <li>
-                <strong>Equipo:</strong> <%= `${request.equipo.tipo} ${request.equipo.marca}` %> <br>
-                <strong>Problema:</strong> <%= request.descripcion_problema.substring(0, 50) %>... <br>
-                <strong>Estado:</strong> <span class="estado <%= request.estado.toLowerCase().replace(' ', '-') %>">
-                    <%= request.estado %>
+                <strong>Equipo:</strong> <%= solicitud.equipo %> <br>
+                <strong>Problema:</strong> <%= solicitud.descripcion_problema.substring(0, 50) %>... <br>
+                <strong>Estado:</strong> <span class="estado <%= solicitud.estado.toLowerCase().replace(' ', '-') %>">
+                    <%= solicitud.estado %>
                 </span>
             </li>
         <% }); %>
@@ -39,7 +39,7 @@ const supportRequests = [
 
 <div class="buttons-container">
     <a href="/soporte/crear" class="support-button">Solicitar Soporte</a>
-    <a href="/" class="view-all">Ver Todas</a>
+    <a href="/soporte" class="view-all">Ver Todas</a>
 </div>
 
 <style>

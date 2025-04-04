@@ -12,6 +12,12 @@ export const getEquipoById = async (id) => {
   return await executeQuery(query, [id]);
 };
 
+// Obtener un equipo por su ID de usuario asignado
+export const getEquipoByUsuarioAsignadoId = async (id) => {
+  const query = "SELECT id_equipo, tipo, modelo, serie FROM equipos WHERE id_usuario_asignado = ?";
+  return await executeQuery(query, [id]);
+};
+
 // Crear un nuevo equipo
 export const createEquipo = async (tipo, marca, modelo, serie, estado, usuarioId) => {
   const query = "INSERT INTO equipos (tipo, marca, modelo, serie, estado, id_usuario_asignado) VALUES (?, ?, ?, ?, ?, ?)";

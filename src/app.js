@@ -34,7 +34,6 @@ app.use('/reparaciones', reparacionesRoutes);
 app.use("/soporte", soporteRouter);
 app.use("/dashboard", dashboadRoutes);
 app.use("/equipos", equiposRoutes);
-app.use("/reparaciones", reparacionesRoutes);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

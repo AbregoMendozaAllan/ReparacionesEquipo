@@ -1,10 +1,19 @@
 import express from "express";
-import {createSoporte, showSoporte} from "../controllers/soporteController.js";
+import {
+    createSoporte,
+    getHistorial,
+    getSoportesByUsuarioId,
+    showSoporteCrear
+} from "../controllers/soporteController.js";
 import {authenticateToken} from "../middleware/authMiddleware.js";
+import {updateUsuario} from "../controllers/authController.js";
 
 const soporteRouter = express.Router();
 
-soporteRouter.get("/crear", authenticateToken,showSoporte);
+soporteRouter.get("/crear", authenticateToken,showSoporteCrear);
 soporteRouter.post("/crear", authenticateToken, createSoporte);
 
+soporteRouter.get("/", authenticateToken, getSoportesByUsuarioId);
+
+soporteRouter.get('/historial', authenticateToken, getHistorial);
 export default soporteRouter;

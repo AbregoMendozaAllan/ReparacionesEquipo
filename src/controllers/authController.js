@@ -1,14 +1,16 @@
 import bcrypt from 'bcryptjs';
 import {
     createBitacoraLogin,
-    createUsuarioAndLogin,
+    createUsuarioAndLogin, getAllFromUsername,
     getEmailByEmail,
     getPasswordHashByUsername,
     getUserIdAndRoleId,
-    getUsernameByUsername
+    getUsernameByUsername, updateLastLogin, updateUsuarioById
 } from "../dao/authDao.js";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
+import {getUserFromToken} from "../middleware/authMiddleware.js";
+import {executeQuery} from "../config/db.js";
 
 dotenv.config();
 
@@ -87,6 +89,7 @@ export const loginUser = async (req, res) => {
             return res.send('<script>alert("Error: Usuario o contraseña incorrectas!"); window.location.href = "/user/login"</script>');
         }
 
+        await updateLastLogin(username);
         await createBitacoraLogin(username, ipAdd, 'SUCCESS', 'Null',userAgent);
 
         const [ads] = await getUserIdAndRoleId(username);
@@ -107,4 +110,29 @@ export const loginUser = async (req, res) => {
 export const logout = (req, res) => {
     res.clearCookie('token');
     res.redirect('/user/login');
+};
+
+export const getUsuarioInfo = async (req, res) => {
+    const { idUsuario } = await getUserFromToken(req);
+    const [user] = await getAllFromUsername(idUsuario);
+    console.log(user);
+    res.render('usuario/configuracion', { user });
+};
+
+export const updateUsuario = async (req, res) => {
+    try {
+        const { idUsuario } = await getUserFromToken(req);
+        const { email, telefono } = req.body;
+
+        const [existingEmail] = await getEmailByEmail(email);
+        if (existingEmail && existingEmail.id_usuario !== idUsuario) {
+            return res.send('<script>alert("Error: Correo ya en uso"); window.location.href = "/user/perfil"</script>');
+        }
+
+        await updateUsuarioById(idUsuario, email, telefono);
+        res.send('<script>alert("Actualizacion Completada!"); window.location.href = "/user/perfil"</script>');
+    } catch (e) {
+        console.error(e);
+        res.status(500).send("Error actualizando usuario");
+    }
 };
