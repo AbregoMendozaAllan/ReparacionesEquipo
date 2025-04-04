@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+<<<<<<< Updated upstream
+=======
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+>>>>>>> Stashed changes
     <title>Crear Reparación</title>
     <link rel="stylesheet" href="/static/styles/styles.css">
 </head>
@@ -8,6 +13,7 @@
     <h2>Crear Reparación</h2>
 
     <form action="/reparaciones/crear" method="POST">
+<<<<<<< Updated upstream
         <label for="id_equipo">Equipo:</label>
         <select name="id_equipo" required>
             <% equipos.forEach(equipo => { %>
@@ -28,11 +34,53 @@
                 <option value="<%= tecnico.id_usuario %>"><%= tecnico.nombre %></option>
             <% }) %>
         </select>
+=======
+        <div class="form-group">
+            <label for="id_equipo">Equipo:</label>
+            <select name="id_equipo" required>
+                <% equipos.forEach(equipo => { %>
+                  <option value="<%= equipo.id_equipo %>">
+                    <%= equipo.tipo %> - <%= equipo.marca %> - <%= equipo.modelo %>
+                  </option>
+                <% }) %>
+              </select>
+              
+        </div>
+
+        <div class="form-group">
+            <label for="id_solicitud">Solicitud:</label>
+            <select name="id_solicitud" required>
+                <% solicitudes.forEach(solicitud => { %>
+                  <option value="<%= solicitud.id_solicitud %>">
+                    Solicitud <%= solicitud.id_solicitud %> - <%= solicitud.descripcion %>
+                  </option>
+                <% }) %>
+              </select>
+              
+        </div>
+
+        <div class="form-group">
+            <label for="id_tecnico_asignado">Técnico:</label>
+            <select name="id_tecnico_asignado" required>
+                <option value="" disabled selected>Seleccione un técnico</option>
+                <% tecnicos.forEach(tecnico => { %>
+                    <option value="<%= tecnico.id_usuario %>"><%= tecnico.nombre %></option>
+                <% }) %>
+            </select>
+        </div>
+>>>>>>> Stashed changes
 
         <button type="submit">Crear Reparación</button>
     </form>
 
+<<<<<<< Updated upstream
     <a href="/reparaciones/listado">Volver a la lista de reparaciones</a>
 </body>
 </html>
 
+=======
+    <a href="/reparaciones/cambiarestado">Volver a cambiar estado de la reparacion</a>
+
+</body>
+</html>
+>>>>>>> Stashed changes

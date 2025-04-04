@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Lista de Reparaciones</title>
+</head>
+<body>
+    <h2>Lista de Reparaciones</h2>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Equipo</th>
+                <th>Estado</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% reparaciones.forEach(reparacion => { %>
+                <tr>
+                    <td><%= reparacion.id_reparacion %></td>
+                    <td><%= reparacion.id_equipo %></td>
+                    <td><%= reparacion.estado %></td>
+                    <td>
+                        <form action="/cambiar-estado/<%= reparacion.id_reparacion %>" method="POST">
+                            <label for="nuevo_estado">Estado:</label>
+                            <select name="nuevo_estado" required>
+                                <option value="En espera" <%= reparacion.estado === 'En espera' ? 'selected' : '' %>>En espera</option>
+                                <option value="En reparación" <%= reparacion.estado === 'En reparación' ? 'selected' : '' %>>En reparación</option>
+                                <option value="Reparado" <%= reparacion.estado === 'Reparado' ? 'selected' : '' %>>Reparado</option>
+                                <option value="Descartado" <%= reparacion.estado === 'Descartado' ? 'selected' : '' %>>Descartado</option>
+                            </select>
+                            <button type="submit">Cambiar Estado</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+
+    <a href="/crear-reparacion">Crear Nueva Reparación</a>
+</body>
+</html>

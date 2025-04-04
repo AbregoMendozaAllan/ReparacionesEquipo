@@ -7,7 +7,11 @@ import authRoutes from "./routes/authRoutes.js";
 import dashboadRoutes from "./routes/dashboadRoutes.js";
 import equiposRoutes from "./routes/equipos.routes.js";
 import soporteRouter from "./routes/soporteRoutes.js";
+<<<<<<< Updated upstream
 import reparacionesRoutes from "./routes/reparacionesRoutes.js";
+=======
+import reparacionesRoutes from "./routes/reparacionesRoutes.js";  // Solo una vez
+>>>>>>> Stashed changes
 import cookieParser from "cookie-parser";
 
 dotenv.config();
@@ -19,7 +23,7 @@ const __dirname = path.dirname(__filename);
 
 // Configurar motor de vistas y directorio de vistas
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
+app.set("views", path.join(__dirname, "views")); // Ahora apunta a 'views/reparaciones'
 
 // Configurar Express para servir archivos estáticos desde la carpeta public
 app.use("/static", express.static(path.join(__dirname, "public")));
@@ -30,11 +34,18 @@ app.use(cookieParser());
 
 // Rutas
 app.use("/user", authRoutes);
+<<<<<<< Updated upstream
 app.use('/reparaciones', reparacionesRoutes);
 app.use("/soporte", soporteRouter);
 app.use("/dashboard", dashboadRoutes);
 app.use("/equipos", equiposRoutes);
 app.use("/reparaciones", reparacionesRoutes);
+=======
+app.use("/reparaciones", reparacionesRoutes); // Solo una vez
+app.use("/soporte", soporteRouter);
+app.use("/dashboard", dashboadRoutes);
+app.use("/equipos", equiposRoutes);
+>>>>>>> Stashed changes
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

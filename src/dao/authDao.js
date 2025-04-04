@@ -17,7 +17,6 @@ export const getEmailByEmail = async (email) => {
 
 export const createUsuarioAndLogin = async (nombre, email, telefono, idRol, username, passwordHash) => {
     try {
-
         await executeQuery("START TRANSACTION;", []);
 
         const insertUserQuery = "INSERT INTO usuarios (nombre, email, telefono, id_rol) VALUES (?, ?, ?, ?);";
@@ -52,4 +51,9 @@ export const createBitacoraLogin = async (Usuario, ipAdd, status, error, userAge
     } catch (e) {
         console.log(e);
     }
+};
+
+export const obtenerTecnicos = async () => {
+    const query = `SELECT id_usuario, nombre FROM usuarios WHERE id_rol = 2`; // 2 = técnicos
+    return await executeQuery(query, []);
 };

@@ -1,34 +1,101 @@
 /* public/styles/styles.css */
 
-/* Estilo general */
+/* ----- ESTILO GENERAL ----- */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f2f5;
     margin: 0;
+<<<<<<< Updated upstream
 }
 
 /* Títulos */
 h2 {
     text-align: center;
+=======
+    padding: 0;
+>>>>>>> Stashed changes
     color: #333;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
+<<<<<<< Updated upstream
 /* Botones */
+=======
+/* ----- CONTENEDOR PRINCIPAL ----- */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/* ----- TITULO ----- */
+h2 {
+    color: #333;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+    position: relative;
+    top: -30px;
+}
+
+/* ----- FORMULARIO ----- */
+form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 350px;
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* ----- INPUTS ----- */
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 16px;
+    transition: border 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+/* ----- BOTÓN ----- */
+>>>>>>> Stashed changes
 button {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     background-color: #4CAF50;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     font-size: 16px;
+    font-weight: bold;
+    transition: background 0.3s ease, transform 0.2s;
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #388E3C;
+    transform: scale(1.05);
 }
 
+<<<<<<< Updated upstream
 /* Formulario de creación de reparación */
 form {
     background-color: #fff;
@@ -94,9 +161,47 @@ button.table-btn:hover {
 }
 
 /* Estilos de mensajes de error */
+=======
+/* ----- MENSAJES DE ERROR ----- */
+>>>>>>> Stashed changes
 .error-message {
     color: red;
     font-size: 14px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+/* ----- LINKS INFERIORES ----- */
+.links-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.links-container a {
+    display: block;
+    color: #4CAF50;
+    text-decoration: none;
+    font-size: 14px;
+    margin-top: 8px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.links-container a:hover {
+    color: #388E3C;
+    text-decoration: underline;
+}
+
+/* ----- ANIMACIONES ----- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Estilo para la vista de reparación */
