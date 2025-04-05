@@ -1,44 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <title>Solicitud de Soporte</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crear Nuevo Equipo</title>
 </head>
 <body>
-<h2>Solicitud de Soporte</h2>
+  <h1>Crear Nuevo Equipo</h1>
 
-<form action="/equipos/create" method="POST">
+  <form action="/equipos/create" method="POST">
+    <label for="tipo">Tipo:</label>
+    <select id="tipo" name="tipo" required>
+      <option value="" disabled selected>Seleccione un tipo</option>
+      <option value="Laptop">Laptop</option>
+      <option value="PC">PC</option>
+      <option value="Monitor">Monitor</option>
+      <option value="Impresora">Impresora</option>
+      <option value="Otro">Otro</option>
+    </select><br>
 
-  <label for="tipo">Tipo:</label>
-  <select id="tipo" name="tipo" required>
-    <option value="Laptop">Laptop</option>
-    <option value="PC">PC</option>
-    <option value="Monitor">Monitor</option>
-    <option value="Impresora">Impresora</option>
-    <option value="Otro">Otro</option>
-  </select><br>
+    <label for="marca">Marca:</label>
+    <input type="text" id="marca" name="marca" required><br>
 
-  <label>Marca:</label>
-  <input type="text" name="marca" required><br>
+    <label for="modelo">Modelo:</label>
+    <input type="text" id="modelo" name="modelo" required><br>
 
-  <label>Modelo:</label>
-  <input type="text" name="modelo" required><br>
+    <label for="serie">Serie:</label>
+    <input type="text" id="serie" name="serie" required><br>
 
-  <label>Serie:</label>
-  <input type="text" name="serie" required><br>
+    <label for="estado">Estado:</label>
+    <select id="estado" name="estado" required>
+      <option value="" disabled selected>Seleccione un estado</option>
+      <option value="Disponible">Disponible</option>
+      <option value="Asignado">Asignado</option>
+      <option value="En reparacion">En Reparación</option>
+      <option value="Descartado">Descartado</option>
+    </select><br>
 
-  <label>Estado:</label>
-  <select id="estado" name="estado" required>
-    <option value="Disponible">Disponible</option>
-    <option value="Asignado">Asignado</option>
-    <option value="En reparacion">En Reparacion</option>
-    <option value="Descartado">Descartado</option>
-  </select ><br>
+    <label for="usuarioId">ID de Usuario Asignado:</label>
+    <input type="text" id="usuarioId" name="usuarioId"><br>
 
-  <label>ID de Usuario:</label>
-  <input type="text" name="usuarioId"><br>
-
-  <button type="submit">Registrar</button>
-</form>
-
+    <button type="submit">Registrar Equipo</button>
+  </form>
 </body>
 </html>

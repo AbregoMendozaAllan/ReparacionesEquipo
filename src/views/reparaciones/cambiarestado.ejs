@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Cambiar Estado de Reparación</title>
+    <link rel="stylesheet" href="/static/styles/styles.css">
+</head>
+<body>
+    <h2>Cambiar Estado de la Reparación</h2>
+
+    <form action="/reparaciones/cambiarestado" method="POST">
+        <label for="id_reparacion">Reparación:</label>
+        <select name="id_reparacion" required>
+            <% reparaciones.forEach(reparacion => { %>
+                <option value="<%= reparacion.id_reparacion %>"><%= reparacion.id_reparacion %></option>
+            <% }) %>
+        </select>
+
+        <label for="estado">Nuevo Estado:</label>
+        <select name="estado" required>
+            <option value="En espera">En espera</option>
+            <option value="Reparado">Reparado</option>
+            <option value="Descartado">Descartado</option>
+        </select>
+
+        <button type="submit">Actualizar Estado</button>
+    </form>
+
+    <a href="/reparaciones/crear">Volver a crear reparacion </a>
+</body>
+</html>

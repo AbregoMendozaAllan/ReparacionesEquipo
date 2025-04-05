@@ -13,17 +13,22 @@ const pool = mysql.createPool({
 });
 
 export const executeQuery = async (query, params) => {
-    const [row] = await pool.query(query, params);
-    return row;
+    try {
+        const [rows] = await pool.query(query, params);
+        return rows;
+    } catch (error) {
+        console.error("Error al ejecutar la consulta:", error);
+        throw error;
+    }
 }
 
 export const testConnection = async () => {
     try {
         const conn = await pool.getConnection();
-        console.log("Conexion Exitosa");
+        console.log("Conexión exitosa");
         conn.release();
     } catch (e) {
-        console.error(`Se presento un error: ${e}`);
+        console.error(`Se presentó un error: ${e}`);
         throw e;
     }
 }
