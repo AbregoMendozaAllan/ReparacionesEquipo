@@ -71,6 +71,13 @@
     <div class="dashboard-card">
         <%- include("components/dashboard/solicitante/_historial") %>
     </div>
+
+    <% if (role == 1) { %>
+        <div class="dashboard-card">
+            <%- include("components/dashboard/admin/_equipo") %>
+        </div>
+    <% } %>
+
 </div>
 
 <div class="logout-container">
