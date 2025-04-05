@@ -1,10 +1,14 @@
 import { executeQuery } from "../config/db.js";
 
-// Obtener todos los equipos
+// Obtener Todos los Equipos
 export const getAllEquipos = async () => {
-  const query = "SELECT * FROM equipos";
-  return await executeQuery(query);
+    const query = `
+        SELECT id_equipo, tipo, marca, modelo 
+        FROM equipos;
+    `;
+    return await executeQuery(query);
 };
+
 
 // Obtener un equipo por su ID
 export const getEquipoById = async (id) => {

@@ -5,15 +5,7 @@ body {
     font-family: 'Poppins', sans-serif;
     background-color: #f0f2f5;
     margin: 0;
-<<<<<<< Updated upstream
-}
-
-/* Títulos */
-h2 {
-    text-align: center;
-=======
     padding: 0;
->>>>>>> Stashed changes
     color: #333;
     display: flex;
     flex-direction: column;
@@ -22,9 +14,6 @@ h2 {
     height: 100vh;
 }
 
-<<<<<<< Updated upstream
-/* Botones */
-=======
 /* ----- CONTENEDOR PRINCIPAL ----- */
 .container {
     display: flex;
@@ -76,7 +65,6 @@ input[type="password"]:focus {
 }
 
 /* ----- BOTÓN ----- */
->>>>>>> Stashed changes
 button {
     width: 100%;
     padding: 12px;
@@ -95,75 +83,7 @@ button:hover {
     transform: scale(1.05);
 }
 
-<<<<<<< Updated upstream
-/* Formulario de creación de reparación */
-form {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 320px;
-    text-align: center;
-    margin: 30px auto;
-}
-
-/* Estilos de inputs */
-input[type="text"], select {
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-input[type="text"]:focus, select:focus {
-    border-color: #4CAF50;
-    outline: none;
-}
-
-/* Estilos para la tabla de reparaciones */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 30px 0;
-    font-size: 16px;
-    text-align: left;
-}
-
-th, td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #4CAF50;
-    color: white;
-}
-
-tr:hover {
-    background-color: #f1f1f1;
-}
-
-/* Estilo de los botones en la tabla */
-button.table-btn {
-    padding: 5px 10px;
-    border: none;
-    border-radius: 4px;
-    background-color: #2196F3;
-    color: white;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-button.table-btn:hover {
-    background-color: #1976D2;
-}
-
-/* Estilos de mensajes de error */
-=======
 /* ----- MENSAJES DE ERROR ----- */
->>>>>>> Stashed changes
 .error-message {
     color: red;
     font-size: 14px;
@@ -174,7 +94,7 @@ button.table-btn:hover {
 /* ----- LINKS INFERIORES ----- */
 .links-container {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
 .links-container a {
@@ -203,26 +123,3 @@ button.table-btn:hover {
         transform: translateY(0);
     }
 }
-
-/* Estilo para la vista de reparación */
-.reparaciones-container {
-    margin: 20px auto;
-    width: 90%;
-    max-width: 1200px;
-}
-
-.reparaciones-title {
-    font-size: 24px;
-    color: #333;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-/* Estilo para los mensajes de éxito */
-.success-message {
-    color: green;
-    font-size: 16px;
-    text-align: center;
-    margin-top: 20px;
-}
-

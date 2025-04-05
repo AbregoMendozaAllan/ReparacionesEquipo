@@ -1,38 +1,58 @@
-import { ReparacionDAO } from '../dao/reparacionesDao.js';
+import { obtenerReparacionesPorTecnico } from "../dao/reparacionesDao.js"; 
+import { getSolicitudesActivas } from "../dao/soporteDao.js";
+import { obtenerTecnicos } from "../dao/authDao.js"; 
+import { getAllEquipos } from "../dao/equiposDao.js"; 
 
-// Controlador para mostrar el formulario de creación de reparaciones
-export const vistaCrearReparacion = async (req, res) => {
+// Mostrar formulario para crear reparación
+export const showCrearReparacion = async (req, res) => {
     try {
-        const equipos = await ReparacionDAO.obtenerEquipos();
-        const solicitudes = await ReparacionDAO.obtenerSolicitudesSoporte();  // Cambio aquí para llamar la función correcta
-        const tecnicos = await ReparacionDAO.obtenerTecnicos();
+        const tecnicos = await obtenerTecnicos();
+        const solicitudes = await getSolicitudesActivas();
+        const equipos = await getAllEquipos(); 
 
-        res.render('reparaciones/crear', { equipos, solicitudes, tecnicos });
+        res.render("reparaciones/crear", {
+            tecnicos,
+            solicitudes,
+            equipos
+        });
     } catch (error) {
-        console.error("Error al cargar la vista de creación de reparación:", error);
-        res.status(500).send("Error interno del servidor");
+        console.log(error);
+        res.send("Error al cargar el formulario");
     }
 };
 
-// Controlador para procesar la creación de una reparación
-export const crearReparacion = async (req, res) => {
+// Crear reparación
+export const handleCrearReparacion = async (req, res) => {
     try {
-        const { id_equipo, id_solicitud, id_tecnico_asignado } = req.body;
-        await ReparacionDAO.crearReparacion(id_equipo, id_solicitud, id_tecnico_asignado);
-        res.redirect('/reparaciones/listado');
+        const { id_equipo, id_solicitud, id_tecnico } = req.body;
+        await crearReparacion(id_equipo, id_solicitud, id_tecnico);
+        res.send('<script>alert("Reparación creada correctamente."); window.location.href="/dashboard"</script>');
     } catch (error) {
-        console.error("Error al crear la reparación:", error);
-        res.status(500).send("Error al crear la reparación");
+        console.log(error);
+        res.send('<script>alert("Error al crear reparación."); window.location.href="/dashboard"</script>');
     }
 };
 
-// Controlador para listar reparaciones
-export const listarReparaciones = async (req, res) => {
+// Mostrar formulario para cambiar estado (solo para técnicos)
+export const showCambiarEstado = async (req, res) => {
     try {
-        const reparaciones = await ReparacionDAO.obtenerReparaciones();
-        res.render('reparaciones/listado', { reparaciones });
+        const idTecnico = req.usuario?.id_usuario; // Obtener el ID del técnico desde el middleware de autenticación
+        const reparaciones = await obtenerReparacionesPorTecnico(idTecnico);
+        res.render("reparaciones/cambiarestado", { reparaciones });
     } catch (error) {
-        console.error("Error al obtener la lista de reparaciones:", error);
-        res.status(500).send("Error al obtener la lista de reparaciones");
+        console.log(error);
+        res.send("Error al cargar reparaciones.");
+    }
+};
+
+// Procesar cambio de estado
+export const handleCambiarEstado = async (req, res) => {
+    try {
+        const { id_reparacion, nuevo_estado } = req.body;
+        await actualizarEstadoReparacion(id_reparacion, nuevo_estado);
+        res.send('<script>alert("Estado actualizado."); window.location.href="/dashboard"</script>');
+    } catch (error) {
+        console.log(error);
+        res.send('<script>alert("Error al actualizar estado."); window.location.href="/dashboard"</script>');
     }
 };
