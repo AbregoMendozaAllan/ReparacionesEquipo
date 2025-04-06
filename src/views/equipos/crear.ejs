@@ -6,41 +6,62 @@
   <title>Crear Nuevo Equipo</title>
 </head>
 <body>
-  <h1>Crear Nuevo Equipo</h1>
+<h1>Crear Nuevo Equipo</h1>
 
-  <form action="/equipos/create" method="POST">
-    <label for="tipo">Tipo:</label>
-    <select id="tipo" name="tipo" required>
-      <option value="" disabled selected>Seleccione un tipo</option>
-      <option value="Laptop">Laptop</option>
-      <option value="PC">PC</option>
-      <option value="Monitor">Monitor</option>
-      <option value="Impresora">Impresora</option>
-      <option value="Otro">Otro</option>
-    </select><br>
+<form action="/equipos/create" method="POST">
+  <label for="tipo">Tipo:</label>
+  <select id="tipo" name="tipo" required>
+    <option value="" disabled selected>Seleccione un tipo</option>
+    <option value="Laptop">Laptop</option>
+    <option value="PC">PC</option>
+    <option value="Monitor">Monitor</option>
+    <option value="Impresora">Impresora</option>
+    <option value="Otro">Otro</option>
+  </select><br>
 
-    <label for="marca">Marca:</label>
-    <input type="text" id="marca" name="marca" required><br>
+  <label for="marca">Marca:</label>
+  <input type="text" id="marca" name="marca" required><br>
 
-    <label for="modelo">Modelo:</label>
-    <input type="text" id="modelo" name="modelo" required><br>
+  <label for="modelo">Modelo:</label>
+  <input type="text" id="modelo" name="modelo" required><br>
 
-    <label for="serie">Serie:</label>
-    <input type="text" id="serie" name="serie" required><br>
+  <label for="serie">Serie:</label>
+  <input type="text" id="serie" name="serie" required><br>
 
-    <label for="estado">Estado:</label>
-    <select id="estado" name="estado" required>
-      <option value="" disabled selected>Seleccione un estado</option>
-      <option value="Disponible">Disponible</option>
-      <option value="Asignado">Asignado</option>
-      <option value="En reparacion">En Reparación</option>
-      <option value="Descartado">Descartado</option>
-    </select><br>
+  <label for="estado">Estado:</label>
+  <select id="estado" name="estado" required>
+    <option value="" disabled selected>Seleccione un estado</option>
+    <option value="Disponible">Disponible</option>
+    <option value="Asignado">Asignado</option>
+    <option value="En reparacion">En Reparación</option>
+    <option value="Descartado">Descartado</option>
+  </select><br>
 
-    <label for="usuarioId">ID de Usuario Asignado:</label>
-    <input type="text" id="usuarioId" name="usuarioId"><br>
+  <label for="usuarioId">ID de Usuario Asignado:</label>
+  <select name="usuarioId" id="usuarioId" required disabled>
+    <option value="">No Asignar Usuario</option>
+    <% usuarios.forEach(usuario => { %>
+      <option value="<%= usuario.id_usuario %>">
+        <%= usuario.id_usuario %> - <%= usuario.nombre %>
+      </option>
+    <% }); %>
+  </select><br>
 
-    <button type="submit">Registrar Equipo</button>
-  </form>
+  <button type="submit">Registrar Equipo</button>
+</form>
+
+<script>
+  const estadoSelect = document.getElementById('estado');
+  const usuarioSelect = document.getElementById('usuarioId');
+
+  estadoSelect.addEventListener('change', () => {
+    if (estadoSelect.value === 'Asignado') {
+      usuarioSelect.disabled = false;
+    } else {
+      usuarioSelect.value = "";
+      usuarioSelect.disabled = true;
+    }
+  });
+</script>
 </body>
 </html>

@@ -1,10 +1,18 @@
-import { createEquipo, deleteEquipo, getAllEquipos, getEquipoById, updateEquipo } from "../dao/equiposDao.js";
+import {
+  createEquipo,
+  createEquipoSinUsuarioId,
+  deleteEquipo,
+  getAllEquipos,
+  getEquipoById,
+  updateEquipo
+} from "../dao/equiposDao.js";
+import {getAllIdAndNameFromUsuarios} from "../dao/authDao.js";
 
 // Mostrar lista de equipos
 export const mostrarEquipos = async (req, res) => {
   try {
     const equipos = await getAllEquipos();
-    console.log("Datos de equipos:", equipos);
+    console.log(equipos);
     res.render("equipos/listado", { equipos });
   } catch (error) {
     console.error("Error al obtener los equipos:", error);
@@ -28,15 +36,22 @@ export const mostrarEquipoPorId = async (req, res) => {
 };
 
 // Mostrar formulario para crear equipo
-export const formularioCrearEquipo = (req, res) => {
-  res.render("equipos/crear");
+export const formularioCrearEquipo = async (req, res) => {
+  const usuarios = await getAllIdAndNameFromUsuarios();
+  console.log(usuarios);
+  res.render("equipos/crear", { usuarios });
 };
 
 // Crear nuevo equipo -- funciona bien
 export const crearNuevoEquipo = async (req, res) => {
   try {
     const { tipo, marca, modelo, serie, estado, usuarioId } = req.body;
-    await createEquipo(tipo, marca, modelo, serie, estado, usuarioId);
+    console.log(req.body);
+    if (estado !== "Asignado") {
+      await createEquipoSinUsuarioId(tipo, marca, modelo, serie, estado);
+    } else {
+      await createEquipo(tipo, marca, modelo, serie, estado, usuarioId);
+    }
     res.send('<script>alert("Equipo ingresado exitosamente!"); window.location.href = "/equipos"</script>');
   } catch (error) {
     console.error("Error al crear equipo:", error);
@@ -48,11 +63,12 @@ export const crearNuevoEquipo = async (req, res) => {
 export const formularioEditarEquipo = async (req, res) => {
   try {
     const { id } = req.params;
-    const equipo = await getEquipoById(id);
+    const [equipo] = await getEquipoById(id);
+    const usuarios = await getAllIdAndNameFromUsuarios();
     if (!equipo) {
       return res.status(404).send("Equipo no encontrado");
     }
-    res.render("equipos/editar", { equipo });
+    res.render("equipos/editar", { equipo, usuarios });
   } catch (error) {
     console.error("Error al obtener el equipo para editar:", error);
     res.status(500).send("Error al obtener el equipo");

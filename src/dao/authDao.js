@@ -80,3 +80,10 @@ export const obtenerTecnicos = async () => {
     const query = `SELECT id_usuario, nombre FROM usuarios WHERE id_rol = 2`; // 2 = técnicos
     return await executeQuery(query, []);
 };
+
+export const getAllIdAndNameFromUsuarios = async () => {
+    const query = `
+        SELECT id_usuario, nombre FROM usuarios`;`
+    `;
+    return await executeQuery(query);
+}

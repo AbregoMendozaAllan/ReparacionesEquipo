@@ -1,51 +1,56 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Lista de Reparaciones</title>
-    <link rel="stylesheet" href="/static/styles/styles.css">
+    <meta charset="UTF-8">
+    <title>Listado de Reparaciones</title>
 </head>
 <body>
-    <h2>Lista de Reparaciones</h2>
+<h2>Listado de Reparaciones</h2>
 
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Equipo</th>
-                <th>Solicitud</th>
-                <th>Técnico Asignado</th>
-                <th>Estado</th>
-                <th>Fecha Reporte</th>
-                <th>Fecha Finalización</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% reparaciones.forEach(reparacion => { %>
-                <tr>
-                    <td><%= reparacion.id_reparacion %></td>
-                    <td><%= reparacion.equipo %></td>
-                    <td><%= reparacion.solicitud %></td>
-                    <td><%= reparacion.tecnico %></td>
-                    <td><%= reparacion.estado %></td>
-                    <td><%= reparacion.fecha_reporte %></td>
-                    <td><%= reparacion.fecha_finalizacion || 'Pendiente' %></td>
-                    <td>
-                        <form action="/reparaciones/actualizar-estado" method="POST">
-                            <input type="hidden" name="id_reparacion" value="<%= reparacion.id_reparacion %>">
-                            <select name="nuevo_estado" required>
-                                <option value="En progreso">En progreso</option>
-                                <option value="Reparado">Reparado</option>
-                                <option value="Descartado">Descartado</option>
-                            </select>
-                            <button type="submit">Actualizar</button>
-                        </form>
-                    </td>
-                </tr>
-            <% }) %>
-        </tbody>
-    </table>
+<table>
+    <thead>
+    <tr>
+        <th>ID Reparación</th>
+        <th>Equipo</th>
+        <th>Descripción del Problema</th>
+        <th>Fecha de Solicitud</th>
+        <th>Solicitante</th>
+        <th>Teléfono</th>
+        <th>Técnico Asignado</th>
+        <th>Fecha de Reporte</th>
+        <th>Fecha Inicio Reparación</th>
+        <th>Fecha Finalización</th>
+        <th>Diagnóstico</th>
+        <th>Estado de Reparación</th>
+        <th>Estado de Solicitud</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% reparaciones.forEach(reparacion => { %>
+        <tr>
+            <td><%= reparacion.id_reparacion %></td>
+            <td><%= reparacion.equipo %></td>
+            <td><%= reparacion.descripcion_problema %></td>
+            <td><%= new Date(reparacion.fecha_solicitud).toLocaleDateString() %></td>
+            <td><%= reparacion.solicitante %></td>
+            <td><%= reparacion.telefono %></td>
+            <td><%= reparacion.tecnico %></td>
+            <td><%= new Date(reparacion.fecha_reporte).toLocaleDateString() %></td>
+            <td><%= reparacion.fecha_inicio_reparacion ? new Date(reparacion.fecha_inicio_reparacion).toLocaleDateString() : 'Pendiente' %></td>
+            <td><%= reparacion.fecha_finalizacion ? new Date(reparacion.fecha_finalizacion).toLocaleDateString() : 'Pendiente' %></td>
+            <td><%= reparacion.diagnostico || 'Pendiente' %></td>
+            <td><%= reparacion.estado_reparacion %></td>
+            <td><%= reparacion.estado_solicitud %></td>
+            <td>
+                <a href="/reparaciones/edit/<%= reparacion.id_reparacion %>">Editar</a>
+            </td>
+        </tr>
+    <% }) %>
+    </tbody>
+</table>
 
-    <a href="/reparaciones/crear">Registrar Nueva Reparación</a>
+<br>
+<a href="/reparaciones/crear">Registrar Nueva Reparación</a>
 </body>
 </html>

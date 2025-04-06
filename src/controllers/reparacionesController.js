@@ -1,4 +1,4 @@
-import { obtenerReparacionesPorTecnico } from "../dao/reparacionesDao.js"; 
+import {getAllReparaciones, obtenerReparacionesPorTecnico} from "../dao/reparacionesDao.js";
 import { getSolicitudesActivas } from "../dao/soporteDao.js";
 import { obtenerTecnicos } from "../dao/authDao.js"; 
 import { getAllEquipos } from "../dao/equiposDao.js"; 
@@ -54,5 +54,15 @@ export const handleCambiarEstado = async (req, res) => {
     } catch (error) {
         console.log(error);
         res.send('<script>alert("Error al actualizar estado."); window.location.href="/dashboard"</script>');
+    }
+};
+
+export const formularioReparaciones = async (req, res) => {
+    try {
+        const reparaciones = await getAllReparaciones();
+        console.log(reparaciones);
+        res.render('reparaciones/listado', {reparaciones});
+    } catch (e) {
+
     }
 };

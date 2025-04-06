@@ -3,7 +3,7 @@ import { executeQuery } from "../config/db.js";
 // Obtener Todos los Equipos
 export const getAllEquipos = async () => {
     const query = `
-        SELECT id_equipo, tipo, marca, modelo 
+        SELECT *
         FROM equipos;
     `;
     return await executeQuery(query);
@@ -26,6 +26,11 @@ export const getEquipoByUsuarioAsignadoId = async (id) => {
 export const createEquipo = async (tipo, marca, modelo, serie, estado, usuarioId) => {
   const query = "INSERT INTO equipos (tipo, marca, modelo, serie, estado, id_usuario_asignado) VALUES (?, ?, ?, ?, ?, ?)";
   return await executeQuery(query, [tipo, marca, modelo, serie, estado, usuarioId]);
+};
+
+export const createEquipoSinUsuarioId = async (tipo, marca, modelo, serie, estado) => {
+    const query = "INSERT INTO equipos (tipo, marca, modelo, serie, estado) VALUES (?, ?, ?, ?, ?)";
+    return await executeQuery(query, [tipo, marca, modelo, serie, estado]);
 };
 
 // Actualizar un equipo existente

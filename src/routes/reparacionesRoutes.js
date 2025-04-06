@@ -3,10 +3,12 @@ import {
     showCrearReparacion,
     handleCrearReparacion,
     showCambiarEstado,
-    handleCambiarEstado
+    handleCambiarEstado, formularioReparaciones
 } from "../controllers/reparacionesController.js";
 
 const router = express.Router();
+
+router.get('/', formularioReparaciones)
 
 // Ruta para mostrar el formulario de creación de reparación
 router.get("/crear", showCrearReparacion);
@@ -19,5 +21,8 @@ router.get("/cambiarestado", showCambiarEstado);
 
 // Ruta para cambiar el estado de la reparación
 router.post("/cambiarestado", handleCambiarEstado);
+
+router.get("/edit/:id");
+router.post("/edit/:id");
 
 export default router;

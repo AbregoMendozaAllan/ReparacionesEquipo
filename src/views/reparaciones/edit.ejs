@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Reparación</title>
+</head>
+<body>
+<h2 style="text-align:center;">Editar Reparación</h2>
+
+<form action="/reparaciones/edit/<%= reparacion.id_reparacion %>" method="POST">
+
+    <p><strong>Equipo:</strong> <%= reparacion.equipo %></p>
+    <p><strong>Solicitante:</strong> <%= reparacion.solicitante %></p>
+    <p><strong>Teléfono del Solicitante:</strong> <%= reparacion.telefono %></p>
+    <p><strong>Fecha de Solicitud:</strong> <%= new Date(reparacion.fecha_solicitud).toLocaleDateString() %></p>
+    <p><strong>Descripción del Problema:</strong> <%= reparacion.descripcion_problema %></p>
+
+    <label for="id_tecnico_asignado">Técnico Asignado</label>
+    <select id="id_tecnico_asignado" name="id_tecnico_asignado" required>
+        <% tecnicos.forEach(tecnico => { %>
+            <option value="<%= tecnico.id_usuario %>" <%= tecnico.id_usuario === reparacion.id_tecnico_asignado ? 'selected' : '' %>>
+                <%= tecnico.id_usuario %> - <%= tecnico.nombre %>
+            </option>
+        <% }) %>
+    </select><br><br>
+
+    <label for="fecha_inicio_reparacion">Fecha de Inicio</label>
+    <input type="date" id="fecha_inicio_reparacion" name="fecha_inicio_reparacion"
+           value="<%= reparacion.fecha_inicio_reparacion ? new Date(reparacion.fecha_inicio_reparacion).toISOString().split('T')[0] : '' %>"><br><br>
+
+    <label for="fecha_finalizacion">Fecha de Finalización</label>
+    <input type="date" id="fecha_finalizacion" name="fecha_finalizacion"
+           value="<%= reparacion.fecha_finalizacion ? new Date(reparacion.fecha_finalizacion).toISOString().split('T')[0] : '' %>"><br><br>
+
+    <label for="diagnostico">Diagnóstico</label><br>
+    <textarea id="diagnostico" name="diagnostico" rows="4" cols="50"><%= reparacion.diagnostico || '' %></textarea><br><br>
+
+    <label for="estado">Estado</label>
+    <select id="estado" name="estado" required>
+        <option value="En espera" <%= reparacion.estado === 'En espera' ? 'selected' : '' %>>En espera</option>
+        <option value="En progreso" <%= reparacion.estado === 'En progreso' ? 'selected' : '' %>>En progreso</option>
+        <option value="Reparado" <%= reparacion.estado === 'Reparado' ? 'selected' : '' %>>Reparado</option>
+        <option value="Descartado" <%= reparacion.estado === 'Descartado' ? 'selected' : '' %>>Descartado</option>
+    </select><br><br>
+
+    <button type="submit">Guardar Cambios</button>
+</form>
+</body>
+</html>
