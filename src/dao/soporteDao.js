@@ -55,3 +55,25 @@ export const getSolicitudesActivas = async () => {
     `;
     return await executeQuery(query);
 };
+
+export const createSoporteConAsignacion = async (usuarioId, equipoId, problema, estadoSolicitud, idTecnicoAsignado) => {
+    try {
+        await executeQuery("START TRANSACTION;", []);
+
+        const solicitudQuery = "INSERT INTO solicitudessoporte (id_usuario_solicitante, id_equipo, descripcion_problema, fecha_solicitud, estado) VALUES (?, ?, ?, NOW(), ?);";
+        const solicitudResult = await executeQuery(solicitudQuery, [usuarioId, equipoId, problema, estadoSolicitud]);
+
+        const solicitudId = solicitudResult.insertId;
+
+        const reparacionQuery = `
+            INSERT INTO reparaciones (id_equipo, id_solicitud, id_tecnico_asignado, fecha_reporte, estado)
+            VALUES (?, ?, ?, NOW(), 'En espera')
+        `;
+        await executeQuery(reparacionQuery, [equipoId, solicitudId, idTecnicoAsignado]);
+
+        await executeQuery("COMMIT;", []);
+    } catch (error) {
+        await executeQuery("ROLLBACK;", []);
+        throw error;
+    }
+};

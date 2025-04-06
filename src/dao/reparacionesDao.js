@@ -46,3 +46,23 @@ export const getAllReparaciones = async () => {
     `;
     return await executeQuery(query);
 };
+
+export const getTecnicosDisponibles = async () => {
+    const query = `
+        SELECT u.id_usuario AS id_tecnico, u.nombre, MAX(r.fecha_finalizacion) AS fecha_finalizacion
+        FROM usuarios u
+                 LEFT JOIN reparaciones r ON u.id_usuario = r.id_tecnico_asignado
+        WHERE u.id_rol = 2
+        GROUP BY u.id_usuario
+        ORDER BY IFNULL(r.fecha_finalizacion, '0000-00-00') DESC;
+    `;
+    const tecnicos =  await executeQuery(query);
+    let technician = tecnicos[0];
+
+    tecnicos.forEach(tecnico => {
+        if (tecnico.fecha_finalizacion === null || (technician.fecha_finalizacion && new Date(tecnico.fecha_finalizacion) < new Date(technician.fecha_finalizacion))) {
+            technician = tecnico;
+        }
+    });
+    return technician;
+}

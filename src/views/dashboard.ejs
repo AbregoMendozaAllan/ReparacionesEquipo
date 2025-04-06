@@ -78,6 +78,12 @@
         </div>
     <% } %>
 
+    <% if (role == 2) { %>
+        <div class="dashboard-card">
+            <%- include("components/dashboard/tecnico/_reparaciones") %>
+        </div>
+    <% } %>
+
 </div>
 
 <div class="logout-container">

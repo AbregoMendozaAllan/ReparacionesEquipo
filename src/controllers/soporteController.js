@@ -1,11 +1,11 @@
 import {getUserFromToken} from "../middleware/authMiddleware.js";
 import {
-    createSolicitud,
+    createSoporteConAsignacion,
     getAllSolicitudesByUsuarioId,
-    getRecentSolicitudesByUsuarioId,
     getSolicitudesTerminadasByUsuarioId
 } from "../dao/soporteDao.js";
 import {getEquipoByUsuarioAsignadoId} from "../dao/equiposDao.js";
+import {getTecnicosDisponibles} from "../dao/reparacionesDao.js";
 
 export const showSoporteCrear = async (req, res) => {
     const { idUsuario } = await getUserFromToken(req);
@@ -17,7 +17,10 @@ export const createSoporte = async (req, res) => {
     try {
         const { equipoId, problema } = req.body;
         const { idUsuario } = await getUserFromToken(req);
-        await createSolicitud(idUsuario, equipoId, problema, 'Pendiente');
+        const { id_tecnico } = await getTecnicosDisponibles();
+        console.log(id_tecnico);
+        await createSoporteConAsignacion(idUsuario, equipoId, problema, 'Pendiente', id_tecnico);
+
         res.send('<script>alert("Solicitud creada exitosamente!"); window.location.href = "/dashboard"</script>');
     } catch (e) {
         console.log(e);
@@ -47,3 +50,4 @@ export const getHistorial = async (req, res) => {
         console.log(e);
     }
 };
+
