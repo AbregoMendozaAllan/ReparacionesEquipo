@@ -10,6 +10,7 @@ import {
 import { getSolicitudesActivas, getSolicitudConSolicitantePorId } from "../dao/soporteDao.js";
 import { obtenerTecnicos } from "../dao/authDao.js";
 import { getAllEquipos, getEquipoById } from "../dao/equiposDao.js";
+import { executeQuery } from "../config/db.js";
 
 // Mostrar formulario para crear reparación
 export const showCrearReparacion = async (req, res) => {
