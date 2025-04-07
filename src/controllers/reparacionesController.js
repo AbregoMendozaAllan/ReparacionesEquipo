@@ -16,12 +16,10 @@ import { executeQuery } from "../config/db.js";
 export const showCrearReparacion = async (req, res) => {
     try {
         const tecnicos = await obtenerTecnicos();
-        const solicitudes = await getSolicitudesActivas();
-        const equipos = await getAllEquipos();
+        const equipos = await getAllEquipos(); // Solo necesitamos técnicos y equipos
 
         res.render("reparaciones/crear", {
             tecnicos,
-            solicitudes,
             equipos
         });
     } catch (error) {
@@ -33,8 +31,8 @@ export const showCrearReparacion = async (req, res) => {
 // Crear reparación
 export const handleCrearReparacion = async (req, res) => {
     try {
-        const { id_equipo, id_solicitud, id_tecnico } = req.body;
-        await crearReparacion(id_equipo, id_solicitud, id_tecnico);
+        const { id_equipo, id_tecnico } = req.body; // Solo necesitamos id_equipo e id_tecnico
+        await crearReparacion(id_equipo, null, id_tecnico); // Pasamos null para id_solicitud
         res.send('<script>alert("Reparación creada correctamente."); window.location.href="/dashboard"</script>');
     } catch (error) {
         console.error(error);
@@ -98,7 +96,7 @@ export const showEditarReparacion = async (req, res) => {
         const tecnicos = await obtenerTecnicos();
 
         const equipoInfoArray = await getEquipoById(reparacion.id_equipo);
-        const equipoInfo = equipoInfoArray[0]; // <--- Accede al primer elemento del array
+        const equipoInfo = equipoInfoArray[0];
 
         const solicitudInfo = await getSolicitudConSolicitantePorId(reparacion.id_solicitud);
 
@@ -117,14 +115,14 @@ export const showEditarReparacion = async (req, res) => {
 // Guardar cambios desde edición
 export const handleEditarReparacion = async (req, res) => {
     try {
-        const { id_tecnico_asignado, fecha_inicio_reparacion, fecha_finalizacion, diagnostico, estado } = req.body;
+        const { id_tecnico_asignado, diagnostico, estado } = req.body; // Quitamos fecha_inicio y fecha_finalizacion
         const id = req.params.id; // Obtener el ID de los parámetros de la ruta
 
         await actualizarReparacionConDiagnostico(
             id,
             id_tecnico_asignado,
-            fecha_inicio_reparacion || null,
-            fecha_finalizacion || null,
+            null, // fecha_inicio_reparacion siempre null
+            null, // fecha_finalizacion siempre null (se maneja por estado)
             diagnostico,
             estado
         );
