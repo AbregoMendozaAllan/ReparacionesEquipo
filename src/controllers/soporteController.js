@@ -10,8 +10,10 @@ import {getTecnicosDisponibles} from "../dao/reparacionesDao.js";
 export const showSoporteCrear = async (req, res) => {
     const { idUsuario } = await getUserFromToken(req);
     const equipos = await getEquipoByUsuarioAsignadoId(idUsuario);
+    console.log(equipos);  // Verifica si equipos tiene datos
     res.render("soporte/soporte-crear", { equipos });
 };
+
 
 export const createSoporte = async (req, res) => {
     try {

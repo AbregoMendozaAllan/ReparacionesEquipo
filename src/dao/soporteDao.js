@@ -1,3 +1,4 @@
+// dao/soporteDao.js
 import { executeQuery } from "../config/db.js";
 
 export const createSolicitud = async (usuarioId, equipoId, problema, estadoSolicitud) => {
@@ -7,10 +8,11 @@ export const createSolicitud = async (usuarioId, equipoId, problema, estadoSolic
 
 export const getAllSolicitudesByUsuarioId = async (usuarioId) => {
     const query = `
-        SELECT CONCAT(e.tipo, ' ', e.marca, ' ', e.modelo, ' ', e.serie) AS equipo, s.descripcion_problema, s.fecha_solicitud, s.estado FROM solicitudessoporte s
-            INNER JOIN equipos e ON e.id_equipo = s.id_equipo
-        WHERE id_usuario_solicitante = ?;
-        `;
+        SELECT CONCAT(e.tipo, ' ', e.marca, ' ', e.modelo, ' ', e.serie) AS equipo, s.descripcion_problema, s.fecha_solicitud, s.estado
+        FROM solicitudessoporte s
+        INNER JOIN equipos e ON e.id_equipo = s.id_equipo
+        WHERE s.id_usuario_solicitante = ?;
+    `;
     return await executeQuery(query, [usuarioId]);
 };
 
@@ -22,7 +24,7 @@ export const getRecentSolicitudesByUsuarioId = async (usuarioId) => {
             s.fecha_solicitud,
             s.estado
         FROM solicitudessoporte s
-                 INNER JOIN equipos e ON e.id_equipo = s.id_equipo
+        INNER JOIN equipos e ON e.id_equipo = s.id_equipo
         WHERE s.id_usuario_solicitante = ?
         ORDER BY s.fecha_solicitud DESC
         LIMIT 3;
@@ -38,7 +40,7 @@ export const getSolicitudesTerminadasByUsuarioId = async (usuarioId) => {
             s.fecha_solicitud,
             s.estado
         FROM solicitudessoporte s
-                 INNER JOIN equipos e ON e.id_equipo = s.id_equipo
+        INNER JOIN equipos e ON e.id_equipo = s.id_equipo
         WHERE s.id_usuario_solicitante = ?
           AND (s.estado = 'Resuelto' OR s.estado = 'Cancelado')
         ORDER BY s.fecha_solicitud DESC;
@@ -46,14 +48,28 @@ export const getSolicitudesTerminadasByUsuarioId = async (usuarioId) => {
     return await executeQuery(query, [usuarioId]);
 };
 
-// Obtener lista de solicitudes activas (solo id_solicitud y descripcion_problema)
 export const getSolicitudesActivas = async () => {
     const query = `
-        SELECT s.id_solicitud, s.descripcion_problema
-        FROM solicitudessoporte s
-        WHERE s.estado = 'Pendiente';  -- Puedes cambiar el estado si es necesario
+        SELECT id_solicitud, descripcion_problema
+        FROM solicitudessoporte
+        WHERE estado = 'Pendiente';
     `;
     return await executeQuery(query);
+};
+
+export const getSolicitudConSolicitantePorId = async (idSolicitud) => {
+    const query = `
+        SELECT s.descripcion_problema,
+               s.fecha_solicitud,
+               u.nombre AS solicitante,
+               u.telefono AS telefono,
+               s.id_usuario_solicitante
+        FROM solicitudessoporte s
+        INNER JOIN usuarios u ON u.id_usuario = s.id_usuario_solicitante
+        WHERE s.id_solicitud = ?
+    `;
+    const resultados = await executeQuery(query, [idSolicitud]);
+    return resultados[0];
 };
 
 export const createSoporteConAsignacion = async (usuarioId, equipoId, problema, estadoSolicitud, idTecnicoAsignado) => {
@@ -62,7 +78,6 @@ export const createSoporteConAsignacion = async (usuarioId, equipoId, problema, 
 
         const solicitudQuery = "INSERT INTO solicitudessoporte (id_usuario_solicitante, id_equipo, descripcion_problema, fecha_solicitud, estado) VALUES (?, ?, ?, NOW(), ?);";
         const solicitudResult = await executeQuery(solicitudQuery, [usuarioId, equipoId, problema, estadoSolicitud]);
-
         const solicitudId = solicitudResult.insertId;
 
         const reparacionQuery = `

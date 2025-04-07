@@ -1,28 +1,37 @@
 import express from "express";
 import {
-    showCrearReparacion,
-    handleCrearReparacion,
-    showCambiarEstado,
-    handleCambiarEstado, formularioReparaciones
+  showCrearReparacion,
+  handleCrearReparacion,
+  showCambiarEstado,
+  handleCambiarEstado,
+  formularioReparaciones,
+  showEditarReparacion,
+  handleEditarReparacion
 } from "../controllers/reparacionesController.js";
 
 const router = express.Router();
 
-router.get('/', formularioReparaciones)
+router.get('/', formularioReparaciones);  // Esta ruta maneja la solicitud GET a /reparaciones/
 
-// Ruta para mostrar el formulario de creación de reparación
+// Ruta para mostrar formulario de creación de reparación
 router.get("/crear", showCrearReparacion);
 
-// Ruta para crear una nueva reparación
+// Ruta para procesar la creación de una reparación
 router.post("/crear", handleCrearReparacion);
 
-// Ruta para mostrar el formulario de cambiar estado
+// Ruta para técnicos: mostrar reparaciones asignadas para cambiar estado
 router.get("/cambiarestado", showCambiarEstado);
 
-// Ruta para cambiar el estado de la reparación
+// Ruta para procesar cambio de estado
 router.post("/cambiarestado", handleCambiarEstado);
 
-router.get("/edit/:id");
-router.post("/edit/:id");
+// Ruta para listar todas las reparaciones
+router.get("/listado", formularioReparaciones);
+
+// Ruta para mostrar el formulario de edición (estado y diagnóstico)
+router.get("/edit/:id", showEditarReparacion);
+
+// Ruta para procesar la edición
+router.post("/edit/:id", handleEditarReparacion);
 
 export default router;

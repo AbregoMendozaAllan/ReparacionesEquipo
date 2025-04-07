@@ -11,20 +11,27 @@
         <label for="id_reparacion">Reparación:</label>
         <select name="id_reparacion" required>
             <% reparaciones.forEach(reparacion => { %>
-                <option value="<%= reparacion.id_reparacion %>"><%= reparacion.id_reparacion %></option>
+                <option value="<%= reparacion.id_reparacion %>">
+                    Reparación #<%= reparacion.id_reparacion %> - <%= reparacion.equipo %> (Estado: <%= reparacion.estado_reparacion %>)
+                </option>
             <% }) %>
         </select>
-
+    
         <label for="estado">Nuevo Estado:</label>
         <select name="estado" required>
             <option value="En espera">En espera</option>
             <option value="Reparado">Reparado</option>
             <option value="Descartado">Descartado</option>
         </select>
-
-        <button type="submit">Actualizar Estado</button>
+    
+        <label for="diagnostico">Diagnóstico:</label>
+        <textarea name="diagnostico" rows="4" cols="50"></textarea>
+    
+        <button type="submit">Actualizar Estado y Diagnóstico</button>
     </form>
+    
+    
 
-    <a href="/reparaciones/crear">Volver a crear una reparacion</a>
+    <a href="/reparaciones/crear">Volver a crear una reparación</a>
 </body>
 </html>

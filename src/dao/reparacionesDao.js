@@ -1,6 +1,6 @@
+// dao/reparacionesDao.js
 import { executeQuery } from "../config/db.js";
 
-// Crear una nueva reparación
 export const crearReparacion = async (idEquipo, idSolicitud, idTecnicoAsignado) => {
     const query = `
         INSERT INTO reparaciones (id_equipo, id_solicitud, id_tecnico_asignado, fecha_reporte, estado)
@@ -9,25 +9,36 @@ export const crearReparacion = async (idEquipo, idSolicitud, idTecnicoAsignado) 
     return await executeQuery(query, [idEquipo, idSolicitud, idTecnicoAsignado]);
 };
 
-// Actualizar el estado de una reparación
 export const actualizarEstadoReparacion = async (idReparacion, nuevoEstado) => {
-    let fechaFinalizacion = null;
+    let query;
+    let params;
+
     if (nuevoEstado === 'Reparado' || nuevoEstado === 'Descartado') {
-        fechaFinalizacion = 'NOW()'; // Si el estado es 'Reparado' o 'Descartado', se asigna la fecha de finalización
+        query = `
+            UPDATE reparaciones
+            SET estado = ?, fecha_finalizacion = NOW()
+            WHERE id_reparacion = ?
+        `;
+        params = [nuevoEstado, idReparacion];
+    } else {
+        query = `
+            UPDATE reparaciones
+            SET estado = ?
+            WHERE id_reparacion = ?
+        `;
+        params = [nuevoEstado, idReparacion];
     }
 
-    const query = `
-        UPDATE reparaciones
-        SET estado = ?, fecha_finalizacion = ${fechaFinalizacion}
-        WHERE id_reparacion = ?
-    `;
-    return await executeQuery(query, [nuevoEstado, idReparacion]);
+    return await executeQuery(query, params);
 };
 
-// Obtener reparaciones asignadas a un técnico
+
 export const obtenerReparacionesPorTecnico = async (idTecnico) => {
     const query = `
-        SELECT id_reparacion, id_equipo, estado FROM reparaciones WHERE id_tecnico_asignado = ?
+        SELECT r.id_reparacion, r.estado, e.id_equipo, CONCAT(e.marca, '-', e.modelo, '-', e.serie) AS equipo
+        FROM reparaciones r
+        INNER JOIN equipos e ON e.id_equipo = r.id_equipo
+        WHERE r.id_tecnico_asignado = ?
     `;
     return await executeQuery(query, [idTecnico]);
 };
@@ -51,18 +62,60 @@ export const getTecnicosDisponibles = async () => {
     const query = `
         SELECT u.id_usuario AS id_tecnico, u.nombre, MAX(r.fecha_finalizacion) AS fecha_finalizacion
         FROM usuarios u
-                 LEFT JOIN reparaciones r ON u.id_usuario = r.id_tecnico_asignado
+        LEFT JOIN reparaciones r ON u.id_usuario = r.id_tecnico_asignado
         WHERE u.id_rol = 2
         GROUP BY u.id_usuario
-        ORDER BY IFNULL(r.fecha_finalizacion, '0000-00-00') DESC;
+        ORDER BY IFNULL(r.fecha_finalizacion, '0000-00-00') DESC
     `;
-    const tecnicos =  await executeQuery(query);
+    const tecnicos = await executeQuery(query);
     let technician = tecnicos[0];
 
     tecnicos.forEach(tecnico => {
-        if (tecnico.fecha_finalizacion === null || (technician.fecha_finalizacion && new Date(tecnico.fecha_finalizacion) < new Date(technician.fecha_finalizacion))) {
+        if (
+            tecnico.fecha_finalizacion === null ||
+            (technician.fecha_finalizacion && new Date(tecnico.fecha_finalizacion) < new Date(technician.fecha_finalizacion))
+        ) {
             technician = tecnico;
         }
     });
+
     return technician;
-}
+};
+
+export const getReparacionPorId = async (idReparacion) => {
+    const query = `
+        SELECT *
+        FROM reparaciones
+        WHERE id_reparacion = ?
+    `;
+    const resultados = await executeQuery(query, [idReparacion]);
+    return resultados[0];
+};
+
+export const actualizarReparacionConDiagnostico = async (
+    id,
+    id_tecnico_asignado,
+    fecha_inicio_reparacion,
+    fecha_finalizacion,
+    diagnostico,
+    estado
+) => {
+    const query = `
+        UPDATE reparaciones
+        SET
+            id_tecnico_asignado = ?,
+            fecha_inicio_reparacion = ?,
+            fecha_finalizacion = ?,
+            diagnostico = ?,
+            estado = ?
+        WHERE id_reparacion = ?
+    `;
+    return await executeQuery(query, [
+        id_tecnico_asignado,
+        fecha_inicio_reparacion,
+        fecha_finalizacion,
+        diagnostico,
+        estado,
+        id
+    ]);
+};

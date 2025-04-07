@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Editar Reparación</title>
+    <link rel="stylesheet" href="/static/styles/styles.css">
 </head>
 <body>
 <h2 style="text-align:center;">Editar Reparación</h2>
 
 <form action="/reparaciones/edit/<%= reparacion.id_reparacion %>" method="POST">
 
-    <p><strong>Equipo:</strong> <%= reparacion.equipo %></p>
-    <p><strong>Solicitante:</strong> <%= reparacion.solicitante %></p>
-    <p><strong>Teléfono del Solicitante:</strong> <%= reparacion.telefono %></p>
-    <p><strong>Fecha de Solicitud:</strong> <%= new Date(reparacion.fecha_solicitud).toLocaleDateString() %></p>
-    <p><strong>Descripción del Problema:</strong> <%= reparacion.descripcion_problema %></p>
+    <p><strong>Equipo:</strong> <%= equipo.marca %> - <%= equipo.modelo %> - <%= equipo.serie %></p>
+    <p><strong>Solicitante:</strong> <%= solicitud.solicitante %></p>
+    <p><strong>Teléfono del Solicitante:</strong> <%= solicitud.telefono %></p>
+    <p><strong>Fecha de Solicitud:</strong> <%= new Date(solicitud.fecha_solicitud).toLocaleDateString() %></p>
+    <p><strong>Descripción del Problema:</strong> <%= solicitud.descripcion_problema %></p>
 
     <label for="id_tecnico_asignado">Técnico Asignado</label>
     <select id="id_tecnico_asignado" name="id_tecnico_asignado" required>

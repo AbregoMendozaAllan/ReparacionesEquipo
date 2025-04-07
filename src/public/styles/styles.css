@@ -5,13 +5,14 @@ body {
     font-family: 'Poppins', sans-serif;
     background-color: #f0f2f5;
     margin: 0;
-    padding: 0;
+    padding: 20px;
     color: #333;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start; /* Cambiado a flex-start para alinear el contenido desde la parte superior */
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
+    box-sizing: border-box;
 }
 
 /* ----- CONTENEDOR PRINCIPAL ----- */
@@ -19,107 +20,209 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    width: 95%;
+    max-width: 1200px;
+    padding: 20px;
+    margin-top: 20px; /* Añadido margen superior para separar del borde del body */
 }
 
-/* ----- TITULO ----- */
+/* ----- TITULO (h2) ----- */
 h2 {
-    color: #333;
-    font-size: 28px;
-    font-weight: bold;
-    margin-bottom: 10px;
+    color: #2c3e50;
+    font-size: 2.5em;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
     text-align: center;
-    position: relative;
-    top: -30px;
 }
 
-/* ----- FORMULARIO ----- */
+/* ----- FORMULARIO (form) ----- */
 form {
     background-color: #fff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    padding: 2.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.15);
     width: 100%;
-    max-width: 350px;
-    text-align: center;
+    max-width: 400px;
+    text-align: left;
     animation: fadeIn 0.5s ease-in-out;
+    margin-bottom: 20px; /* Añadido margen inferior para separar de otros elementos */
 }
 
-/* ----- INPUTS ----- */
+/* ----- ETIQUETAS (label) ----- */
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #555;
+    font-weight: 600;
+}
+
+/* ----- INPUTS (input[type="text"], input[type="password"]) ----- */
 input[type="text"],
-input[type="password"] {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border: 2px solid #ddd;
-    border-radius: 6px;
+input[type="password"],
+select,
+textarea {
+    width: calc(100% - 24px);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
     box-sizing: border-box;
-    font-size: 16px;
-    transition: border 0.3s;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
 }
 
 input[type="text"]:focus,
-input[type="password"]:focus {
-    border-color: #4CAF50;
+input[type="password"]:focus,
+select:focus,
+textarea:focus {
+    border-color: #27ae60;
     outline: none;
+    box-shadow: 0 0 0.2rem #27ae60;
 }
 
-/* ----- BOTÓN ----- */
+/* ----- SELECT (select) ----- */
+select {
+    appearance: none; /* Quita los estilos por defecto del navegador */
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg fill="%233498db" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1em;
+    cursor: pointer;
+}
+
+select::-ms-expand { /* Para ocultar la flecha por defecto en IE/Edge */
+    display: none;
+}
+
+/* ----- TEXTAREA (textarea) ----- */
+textarea {
+    min-height: 100px;
+}
+
+/* ----- BOTÓN (button) ----- */
 button {
     width: 100%;
-    padding: 12px;
-    background-color: #4CAF50;
+    padding: 1rem;
+    background-color: #27ae60;
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 0.5rem;
     cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    transition: background 0.3s ease, transform 0.2s;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
 }
 
 button:hover {
-    background-color: #388E3C;
-    transform: scale(1.05);
+    background-color: #219653;
+    transform: translateY(-2px);
+    box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.15);
 }
 
-/* ----- MENSAJES DE ERROR ----- */
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.1);
+}
+
+/* ----- MENSAJES DE ERROR (.error-message) ----- */
 .error-message {
-    color: red;
-    font-size: 14px;
-    font-weight: bold;
-    margin-top: 5px;
+    color: #e74c3c;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-top: 0.5rem;
+    text-align: left;
 }
 
-/* ----- LINKS INFERIORES ----- */
+/* ----- LINKS INFERIORES (.links-container a) ----- */
 .links-container {
     text-align: center;
-    margin-top: 15px;
+    margin-top: 1.5rem;
 }
 
 .links-container a {
     display: block;
-    color: #4CAF50;
+    color: #3498db;
     text-decoration: none;
-    font-size: 14px;
-    margin-top: 8px;
-    font-weight: bold;
-    transition: color 0.3s ease;
+    font-size: 0.9rem;
+    margin-top: 0.7rem;
+    font-weight: 500;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
 }
 
 .links-container a:hover {
-    color: #388E3C;
+    color: #2980b9;
     text-decoration: underline;
 }
 
-/* ----- ANIMACIONES ----- */
+/* ----- ANIMACIONES (@keyframes fadeIn) ----- */
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(-10px);
+        transform: translateY(-0.5rem);
     }
     to {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* ----- ESTILOS PARA LA TABLA (table en listado.ejs) ----- */
+table {
+    width: 95%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+thead th {
+    background-color: #3498db;
+    color: white;
+    font-weight: bold;
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 2px solid #2980b9;
+}
+
+tbody td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+    background-color: #ecf0f1;
+}
+
+tbody td a {
+    color: #27ae60;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+tbody td a:hover {
+    color: #219653;
+    text-decoration: underline;
+}
+
+/* ----- ESTILOS PARA EL ENLACE DE CREAR NUEVA REPARACIÓN (en listado.ejs) ----- */
+.crear-reparacion-link {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.crear-reparacion-link:hover {
+    color: #2980b9;
+    text-decoration: underline;
 }

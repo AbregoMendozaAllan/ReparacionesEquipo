@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
     <title>Solicitud de Soporte</title>
+    <link rel="stylesheet" href="/static/styles/styles.css">
     <script>
         function updateEquipoDetails() {
             const equipos = <%- JSON.stringify(equipos) %>;
+            console.log(equipos);
             const selectedId = document.getElementById("equipoId").value;
             const equipo = equipos.find(eq => eq.id_equipo == selectedId);
 
