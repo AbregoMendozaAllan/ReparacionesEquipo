@@ -8,35 +8,30 @@
     <h2>Crear Reparación</h2>
 
     <form action="/reparaciones/crear" method="POST">
-        <label for="id_equipo">Equipo:</label>
-        <select name="id_equipo" required>
-            <% equipos.forEach(equipo => { %>
-                <option value="<%= equipo.id_equipo %>">
-                    <%= equipo.tipo %> - <%= equipo.marca %> - <%= equipo.modelo %>
-                </option>
-            <% }) %>
-        </select>
+        <div>
+            <label for="id_equipo">Equipo:</label>
+            <select name="id_equipo" required>
+                <% equipos.forEach(equipo => { %>
+                    <option value="<%= equipo.id_equipo %>">
+                        <%= equipo.tipo %> - <%= equipo.marca %> - <%= equipo.modelo %>
+                    </option>
+                <% }) %>
+            </select>
+        </div>
 
-        <!-- Título para la solicitud -->
-        <label for="id_solicitud">Solicitud:</label>
-        <select name="id_solicitud" required>
-            <% solicitudes.forEach(solicitud => { %>
-                <option value="<%= solicitud.id_solicitud %>">
-                    <%= solicitud.descripcion_problema %>
-                </option>
-            <% }) %>
-        </select>
-
-        <label for="id_tecnico">Técnico:</label>
-        <select name="id_tecnico" required>
-            <% tecnicos.forEach(tecnico => { %>
-                <option value="<%= tecnico.id_usuario %>"><%= tecnico.nombre %></option>
-            <% }) %>
-        </select>
+        <div>
+            <label for="id_tecnico">Técnico:</label>
+            <select name="id_tecnico" required>
+                <% tecnicos.forEach(tecnico => { %>
+                    <option value="<%= tecnico.id_usuario %>"><%= tecnico.nombre %></option>
+                <% }) %>
+            </select>
+        </div>
 
         <button type="submit">Crear Reparación</button>
     </form>
 
-    <a href="/reparaciones/cambiarestado">Volver a cambiar estado</a>
+    <br>
+    <a href="/reparaciones/cambiarestado">Cambiar Estado De Reparacion</a>
 </body>
 </html>
