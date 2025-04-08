@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-import {getUserFromToken} from "../middleware/authMiddleware.js";
 import {getRecentSolicitudesByUsuarioId} from "../dao/soporteDao.js";
 
 export const getDashboard = (req, res) => {

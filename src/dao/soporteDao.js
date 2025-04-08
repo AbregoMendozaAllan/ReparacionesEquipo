@@ -1,4 +1,3 @@
-// dao/soporteDao.js
 import { executeQuery } from "../config/db.js";
 
 export const createSolicitud = async (usuarioId, equipoId, problema, estadoSolicitud) => {

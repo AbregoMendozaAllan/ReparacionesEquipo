@@ -1,4 +1,3 @@
-// src/controllers/reparacionesController.js
 import {
     actualizarReparacionConDiagnostico,
     crearReparacion,

@@ -1,5 +1,4 @@
 import puppeteer from 'puppeteer';
-import path from 'path';
 import {getEquipoTipoStats, getLoginStats, getReparacionEstadoStats} from "../dao/chartsDao.js";
 
 export const renderChartsPage = async (req, res) => {

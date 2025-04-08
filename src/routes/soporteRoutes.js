@@ -6,7 +6,6 @@ import {
     showSoporteCrear
 } from "../controllers/soporteController.js";
 import {authenticateToken} from "../middleware/authMiddleware.js";
-import {updateUsuario} from "../controllers/authController.js";
 
 const soporteRouter = express.Router();
 

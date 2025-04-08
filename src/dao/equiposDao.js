@@ -1,4 +1,3 @@
-// dao/equiposDao.js
 import { executeQuery } from "../config/db.js";
 
 export const getAllEquipos = async () => {
@@ -9,7 +8,6 @@ export const getAllEquipos = async () => {
     return await executeQuery(query);
 };
 
-// dao/equiposDao.js
 export const getEquipoById = async (id) => {
   const query = "SELECT marca, modelo, serie FROM equipos WHERE id_equipo = ?";
   return await executeQuery(query, [id]);
