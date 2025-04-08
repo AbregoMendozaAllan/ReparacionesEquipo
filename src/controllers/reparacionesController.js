@@ -1,16 +1,17 @@
 // src/controllers/reparacionesController.js
 import {
-    getAllReparaciones,
-    getTecnicosDisponibles,
+    actualizarReparacionConDiagnostico,
     crearReparacion,
-    actualizarEstadoReparacion,
+    getAllReparaciones,
     getReparacionPorId,
-    actualizarReparacionConDiagnostico
+    obtenerReparacionesPorTecnico
 } from "../dao/reparacionesDao.js";
-import { getSolicitudesActivas, getSolicitudConSolicitantePorId } from "../dao/soporteDao.js";
-import { obtenerTecnicos } from "../dao/authDao.js";
-import { getAllEquipos, getEquipoById } from "../dao/equiposDao.js";
-import { executeQuery } from "../config/db.js";
+import {getSolicitudConSolicitantePorId, getSolicitudesActivas} from "../dao/soporteDao.js";
+import {obtenerTecnicos} from "../dao/authDao.js";
+import {getAllEquipos, getEquipoById} from "../dao/equiposDao.js";
+import {executeQuery} from "../config/db.js";
+import jwt from "jsonwebtoken";
+import { promisify } from 'util';
 
 // Mostrar formulario para crear reparación
 export const showCrearReparacion = async (req, res) => {
@@ -80,13 +81,28 @@ export const handleCambiarEstado = async (req, res) => {
 };
 
 // Mostrar listado general
+const verifyToken = promisify(jwt.verify);
 export const formularioReparaciones = async (req, res) => {
+    const token = req.cookies.token;
+    if (!token) {
+        return res.redirect('/login');
+    }
     try {
-        const reparaciones = await getAllReparaciones();
-        res.render('reparaciones/listado', { reparaciones });
+        const decoded = await verifyToken(token, process.env.JWT_SECRET);
+        const { userId, role } = decoded;
+        if (role === 1) {
+            const reparaciones = await getAllReparaciones();
+            res.render('reparaciones/listado', { reparaciones });
+        } else if (role === 2) {
+            const reparaciones = await obtenerReparacionesPorTecnico(userId);
+            console.log(reparaciones);
+            res.render('reparaciones/listado', { reparaciones });
+        } else {
+            return res.status(403).send("Unauthorized role");
+        }
     } catch (e) {
         console.error(e);
-        res.send("Error al cargar listado.");
+        return res.status(403).send("Unauthorized or invalid token");
     }
 };
 

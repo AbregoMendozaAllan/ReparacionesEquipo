@@ -68,7 +68,7 @@ export const formularioEditarEquipo = async (req, res) => {
     if (!equipo) {
       return res.status(404).send("Equipo no encontrado");
     }
-    res.render("equipos/editar", { equipo, usuarios });
+    res.render("equipos/editar", { equipo, usuarios, id });
   } catch (error) {
     console.error("Error al obtener el equipo para editar:", error);
     res.status(500).send("Error al obtener el equipo");
@@ -79,6 +79,7 @@ export const formularioEditarEquipo = async (req, res) => {
 export const actualizarEquipo = async (req, res) => {
   try {
     const { id } = req.params;
+    console.log(req.body)
     const { tipo, marca, modelo, serie, estado, usuarioId } = req.body;
 
     // Verificar si el equipo existe

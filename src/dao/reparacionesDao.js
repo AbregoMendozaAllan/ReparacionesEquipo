@@ -1,4 +1,3 @@
-// dao/reparacionesDao.js
 import { executeQuery } from "../config/db.js";
 
 export const crearReparacion = async (idEquipo, idSolicitud, idTecnicoAsignado) => {
@@ -35,9 +34,13 @@ export const actualizarEstadoReparacion = async (idReparacion, nuevoEstado) => {
 
 export const obtenerReparacionesPorTecnico = async (idTecnico) => {
     const query = `
-        SELECT r.id_reparacion, r.estado, e.id_equipo, CONCAT(e.marca, '-', e.modelo, '-', e.serie) AS equipo
+        SELECT r.id_reparacion, r.estado, e.id_equipo, s.descripcion_problema, s.fecha_solicitud, u.nombre AS 'solicitante', u.telefono, 
+               t.nombre AS 'tecnico', CONCAT(e.marca, '-', e.modelo, '-', e.serie) AS equipo, r.fecha_reporte
         FROM reparaciones r
         INNER JOIN equipos e ON e.id_equipo = r.id_equipo
+        INNER JOIN solicitudessoporte s ON s.id_solicitud = r.id_solicitud
+        INNER JOIN usuarios u ON u.id_usuario = s.id_usuario_solicitante
+        INNER JOIN usuarios t ON t.id_usuario = r.id_tecnico_asignado
         WHERE r.id_tecnico_asignado = ?
     `;
     return await executeQuery(query, [idTecnico]);
@@ -71,15 +74,19 @@ export const getTecnicosDisponibles = async () => {
     let technician = tecnicos[0];
 
     tecnicos.forEach(tecnico => {
-        if (
-            tecnico.fecha_finalizacion === null ||
-            (technician.fecha_finalizacion && new Date(tecnico.fecha_finalizacion) < new Date(technician.fecha_finalizacion))
-        ) {
+        if (tecnico.fecha_finalizacion === null || (technician.fecha_finalizacion && new Date(tecnico.fecha_finalizacion) < new Date(technician.fecha_finalizacion))) {
             technician = tecnico;
         }
     });
 
     return technician;
+};
+
+export const insertBitacoraReparaciones = async (reparacionId, estado, tecnicoId) => {
+    const query = `
+        INSERT INTO bitacora_reparaciones (id_reparacion, fecha, accion, usuario_responsable) VALUES (?, now(), ?, ?)
+    `;
+    await executeQuery(query, [reparacionId, estado, tecnicoId]);
 };
 
 export const getReparacionPorId = async (idReparacion) => {

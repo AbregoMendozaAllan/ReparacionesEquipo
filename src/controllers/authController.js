@@ -29,13 +29,11 @@ export const registerUser = async (req, res) => {
         }
 
         const [existingUsername] = await getUsernameByUsername(username);
-        console.log(existingUsername);
         if (existingUsername) {
             return res.status(400).send("usuario ya en uso");
         }
 
         const [existingEmail] = await getEmailByEmail(email);
-        console.log(existingEmail);
         if (existingEmail) {
             return res.status(400).send("Correo electronico ya en uso");
         }
@@ -43,7 +41,7 @@ export const registerUser = async (req, res) => {
         const salt = await bcrypt.genSalt(SALT_ROUNDS);
         const passwordHash = await bcrypt.hash(password, salt);
 
-        await createUsuarioAndLogin(nombre, email, telefono, 1, username, passwordHash);
+        await createUsuarioAndLogin(nombre, email, telefono, 3, username, passwordHash);
         res.send('<script>alert("usuario creado exitosamente!"); window.location.href = "login"</script>');
     } catch (e) {
         console.error(e);
@@ -59,18 +57,12 @@ export const showLoginForm = (req, res) => {
 export const loginUser = async (req, res) => {
     try {
         const { username, password } = req.body;
-        const user = await getUsernameByUsername(username);
+        const [user] = await getUsernameByUsername(username); // Add [user] to destructure properly
         const userAgent = req.headers['user-agent'];
         const ipAdd = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
         const logError = (errorMessage) => {
-            const errorLog =
-                'Error occurred during login attempt for user: ' + username +
-                '. Error message: ' + errorMessage +
-                '. IP Address: ' + ipAdd +
-                '. User Agent: ' + userAgent +
-                '. Timestamp: ' + new Date().toISOString();
-            return errorLog;
+            return `Error occurred during login attempt for user: ${username}. Error message: ${errorMessage}. IP Address: ${ipAdd}. User Agent: ${userAgent}. Timestamp: ${new Date().toISOString()}`;
         };
 
         if (!user) {
@@ -80,17 +72,23 @@ export const loginUser = async (req, res) => {
         }
 
         const [passwordHash] = await getPasswordHashByUsername(username);
-        const { password_hash: storedHashedPassword } = passwordHash;
+        if (!passwordHash) {
+            const errorLog = logError('No password hash found');
+            await createBitacoraLogin(username, ipAdd, 'FAILED', errorLog, userAgent);
+            return res.send('<script>alert("Error: Usuario o contraseña incorrectas!"); window.location.href = "/user/login"</script>');
+        }
 
+        const { password_hash: storedHashedPassword } = passwordHash;
         const isMatch = await bcrypt.compare(password, storedHashedPassword);
+
         if (!isMatch) {
-            const { errorLog } = logError(username, ipAdd, userAgent, 'Invalid password');
+            const errorLog = logError('Invalid password');
             await createBitacoraLogin(username, ipAdd, 'FAILED', errorLog, userAgent);
             return res.send('<script>alert("Error: Usuario o contraseña incorrectas!"); window.location.href = "/user/login"</script>');
         }
 
         await updateLastLogin(username);
-        await createBitacoraLogin(username, ipAdd, 'SUCCESS', 'Null',userAgent);
+        await createBitacoraLogin(username, ipAdd, 'SUCCESS', 'Null', userAgent);
 
         const [ads] = await getUserIdAndRoleId(username);
         const { id_usuario: idUsuario, id_rol: idRol } = ads;
@@ -106,6 +104,7 @@ export const loginUser = async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 };
+
 
 export const logout = (req, res) => {
     res.clearCookie('token');

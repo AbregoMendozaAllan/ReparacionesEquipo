@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Charts</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        canvas { max-width: 600px; margin: 20px auto; }
+        #chart-wrapper { display: flex; flex-wrap: wrap; justify-content: center; }
+    </style>
+</head>
+<body>
+<h1 style="text-align:center">Dashboard Charts</h1>
+<div id="chart-wrapper">
+    <canvas id="loginChart"></canvas>
+    <canvas id="estadoChart"></canvas>
+    <canvas id="tipoChart"></canvas>
+</div>
+
+<script>
+    const loginStats = <%- JSON.stringify(loginStats) %>;
+    const reparacionStats = <%- JSON.stringify(reparacionStats) %>;
+    const equipoStats = <%- JSON.stringify(equipoStats) %>;
+
+    new Chart(document.getElementById('loginChart'), {
+        type: 'pie',
+        data: {
+            labels: loginStats.map(r => r.status),
+            datasets: [{
+                label: 'Logins',
+                data: loginStats.map(r => r.total),
+                backgroundColor: ['#36a2eb', '#ff6384']
+            }]
+        }
+    });
+
+    new Chart(document.getElementById('estadoChart'), {
+        type: 'bar',
+        data: {
+            labels: reparacionStats.map(r => r.estado),
+            datasets: [{
+                label: 'Reparaciones por Estado',
+                data: reparacionStats.map(r => r.total),
+                backgroundColor: '#4bc0c0'
+            }]
+        }
+    });
+
+    new Chart(document.getElementById('tipoChart'), {
+        type: 'doughnut',
+        data: {
+            labels: equipoStats.map(r => r.tipo),
+            datasets: [{
+                label: 'Equipos por Tipo',
+                data: equipoStats.map(r => r.total),
+                backgroundColor: ['#ffcd56', '#ff6384', '#36a2eb', '#4bc0c0', '#9966ff']
+            }]
+        }
+    });
+</script>
+</body>
+</html>

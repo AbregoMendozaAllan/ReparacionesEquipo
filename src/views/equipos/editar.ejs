@@ -7,7 +7,9 @@
 </head>
 <body>
 <h1>Editar Equipo</h1>
-<form action="/equipos/edit/<%= equipo.id_equipo %>" method="POST">
+<h1><%= id %></h1>
+<form action="/equipos/edit/<%= id %>" method="POST">
+
   <label for="tipo">Tipo:</label>
   <select id="tipo" name="tipo" required>
     <option value="Laptop" <%= equipo.tipo === 'Laptop' ? 'selected' : '' %>>Laptop</option>

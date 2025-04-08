@@ -7,6 +7,7 @@ import authRoutes from "./routes/authRoutes.js";
 import dashboadRoutes from "./routes/dashboadRoutes.js";
 import equiposRoutes from "./routes/equipos.routes.js";
 import soporteRouter from "./routes/soporteRoutes.js";
+import chartRoutes from "./routes/chartsRouter.js";  // Solo una vez
 import reparacionesRoutes from "./routes/reparacionesRoutes.js";  // Solo una vez
 import cookieParser from "cookie-parser";
 
@@ -34,6 +35,7 @@ app.use("/reparaciones", reparacionesRoutes); // Solo una vez
 app.use("/soporte", soporteRouter);
 app.use("/dashboard", dashboadRoutes);
 app.use("/equipos", equiposRoutes);
+app.use('/charts', chartRoutes);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
