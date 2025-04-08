@@ -1,24 +1,3 @@
-<%
-// Dummy data for preview
-const supportRequests = [
-    {
-        estado: "Pendiente",
-        descripcion_problema: "La laptop no enciende después de la última actualización.",
-        equipo: { tipo: "Laptop", marca: "Dell", serie: "D12345" }
-    },
-    {
-        estado: "En proceso",
-        descripcion_problema: "La impresora no responde al enviar documentos.",
-        equipo: { tipo: "Impresora", marca: "HP", serie: "HP98765" }
-    },
-    {
-        estado: "Resuelto",
-        descripcion_problema: "Monitor con problemas de color corregido.",
-        equipo: { tipo: "Monitor", marca: "LG", serie: "LG112233" }
-    }
-];
-%>
-
 <h3>📋 Solicitudes Recientes</h3>
 
 <% if (solicitudes.length > 0) { %>
