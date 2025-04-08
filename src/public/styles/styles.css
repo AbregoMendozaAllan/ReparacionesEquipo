@@ -202,7 +202,7 @@ body {
     color: #27ae60;
     text-decoration: none;
     transition: color 0.3s ease;
-    margin-right: 5px; /* Espacio entre los enlaces */
+    margin-right: 5px;
   }
   
   tbody td a:hover {
@@ -210,43 +210,47 @@ body {
     text-decoration: underline;
   }
   
-  /* ----- BOTÓN ELIMINAR (Estilos mejorados y centrado) ----- */
+  /* ----- BOTÓN ELIMINAR (MODIFICADO PARA QUITAR MARCO BLANCO) ----- */
   tbody td form {
-    display: inline-block; /* Evita que el formulario ocupe todo el ancho */
-    margin: 0; /* Elimina márgenes innecesarios del formulario */
+    display: inline-block;
+    margin: 0;
+    background: transparent; /* 🔧 Quitar fondo blanco */
+    border: none;
+    box-shadow: none;
   }
   
-  tbody td:last-child { /* Selecciona la última celda de cada fila (Acciones) */
-    text-align: center; /* Centra el contenido horizontalmente */
+  tbody td:last-child {
+    text-align: center;
     display: flex;
-    justify-content: center; /* Centra horizontalmente en el flex container */
-    align-items: center; /* Centra verticalmente en el flex container */
-    gap: 5px; /* Espacio entre los elementos dentro de la celda de Acciones */
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
   }
   
   tbody td form button {
-    padding: 6px 12px; /* Tamaño pequeño pero adecuado */
-    font-size: 0.9rem; /* Fuente ligeramente más grande */
-    background-color: #e74c3c; /* Rojo suave */
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    background-color: #e74c3c;
     color: white;
-    border: 1px solid #c0392b; /* Borde rojo más oscuro */
-    border-radius: 4px; /* Bordes más redondeados */
+    border: none; /* 🔧 Sin borde blanco */
+    outline: none;
+    box-shadow: none;
+    border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease; /* Transiciones suaves */
-    text-transform: uppercase; /* Texto en mayúsculas para hacerlo más destacado */
-    margin-left: 5px; /* Espacio a la izquierda del botón si hay otros elementos */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-transform: uppercase;
+    margin-left: 5px;
   }
   
   tbody td form button:hover {
-    background-color: #c0392b; /* Rojo más oscuro al pasar el ratón */
-    border-color: #a93226; /* Borde más oscuro */
-    transform: translateY(-2px); /* Efecto de elevar el botón */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil para resaltar el botón */
+    background-color: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
   tbody td form button:active {
-    transform: translateY(0); /* Sin efecto al hacer clic */
-    box-shadow: none; /* Quitar sombra al hacer clic */
+    transform: translateY(0);
+    box-shadow: none;
   }
   
   /* ----- ENLACE NUEVA REPARACIÓN ----- */
@@ -370,3 +374,4 @@ body {
   .estado.en-proceso { background: #17a2b8; color: white; }
   .estado.resuelto { background: #28a745; color: white; }
   .estado.cancelado { background: #dc3545; color: white; }
+  
