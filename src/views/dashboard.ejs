@@ -73,15 +73,21 @@
         <%- include("components/dashboard/solicitante/_historial") %>
     </div>
 
-    <% if (role == 1) { %>
+    <% if (role === 1) { %>
         <div class="dashboard-card">
             <%- include("components/dashboard/admin/_equipo") %>
         </div>
     <% } %>
 
-    <% if (role == 2 || role == 1) { %>
+    <% if (role === 2 || role === 1) { %>
         <div class="dashboard-card">
             <%- include("components/dashboard/tecnico/_reparaciones") %>
+        </div>
+    <% } %>
+
+    <% if (role === 1) { %>
+        <div class="dashboard-card">
+            <%- include("components/dashboard/admin/_usuarios") %>
         </div>
     <% } %>
 

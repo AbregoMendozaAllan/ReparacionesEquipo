@@ -87,3 +87,26 @@ export const getAllIdAndNameFromUsuarios = async () => {
     `;
     return await executeQuery(query);
 }
+
+export const getAllUsuariosWithRoles = async () => {
+    const query = `
+        SELECT * FROM usuarios u
+        INNER JOIN roles r ON r.id_rol = u.id_rol 
+    `;
+    return await executeQuery(query);
+}
+
+export const getRoles = async () => {
+    const query = `
+        SELECT * FROM roles
+    `;
+    return await executeQuery(query);
+};
+
+export const updateRole = async (rolId, usuarioId) => {
+    const query = `
+        UPDATE usuarios SET id_rol = ?
+        WHERE id_usuario = ?
+    `;
+    return await executeQuery(query, [rolId, usuarioId]);
+}

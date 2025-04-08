@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Usuarios</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+        }
+        select {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<h1>Lista de Usuarios</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Teléfono</th>
+        <th>Rol</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% usuarios.forEach(usuario => { %>
+        <tr>
+            <td><%= usuario.id_usuario %></td>
+            <td><%= usuario.nombre %></td>
+            <td><%= usuario.email %></td>
+            <td><%= usuario.telefono %></td>
+            <td>
+                <select name="rol_<%= usuario.id_usuario %>"
+                        data-original="<%= usuario.id_rol %>"
+                        onchange="confirmRoleChange(this, <%= usuario.id_usuario %>)">
+                    <% roles.forEach(rol => { %>
+                        <option value="<%= rol.id_rol %>" <%= usuario.id_rol === rol.id_rol ? 'selected' : '' %>>
+                            <%= rol.rol %>
+                        </option>
+                    <% }) %>
+                </select>
+            </td>
+        </tr>
+    <% }) %>
+    </tbody>
+</table>
+
+<script>
+    function confirmRoleChange(selectEl, userId) {
+        const originalValue = selectEl.getAttribute('data-original');
+        const newValue = selectEl.value;
+        const selectedText = selectEl.options[selectEl.selectedIndex].text;
+
+        if (confirm(`Are you sure you want to change the role of user #${userId} to "${selectedText}"?`)) {
+            const data = {
+                id_usuario: userId,
+                id_rol: newValue
+            };
+
+            fetch('/user/listado', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.text())
+                .then(data => {
+                    document.body.innerHTML = data;
+                })
+                .then(window.location.reload())
+                .catch(error => {
+                    alert('Error actualizando el rol.');
+                    selectEl.value = originalValue;
+                });
+        } else {
+            selectEl.value = originalValue;
+        }
+    }
+</script>
+</body>
+</html>

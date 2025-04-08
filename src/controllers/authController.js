@@ -1,11 +1,11 @@
 import bcrypt from 'bcryptjs';
 import {
     createBitacoraLogin,
-    createUsuarioAndLogin, getAllFromUsername,
+    createUsuarioAndLogin, getAllFromUsername, getAllUsuariosWithRoles,
     getEmailByEmail,
-    getPasswordHashByUsername,
+    getPasswordHashByUsername, getRoles,
     getUserIdAndRoleId,
-    getUsernameByUsername, updateLastLogin, updateUsuarioById
+    getUsernameByUsername, updateLastLogin, updateRole, updateUsuarioById
 } from "../dao/authDao.js";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
@@ -114,7 +114,6 @@ export const logout = (req, res) => {
 export const getUsuarioInfo = async (req, res) => {
     const { idUsuario } = await getUserFromToken(req);
     const [user] = await getAllFromUsername(idUsuario);
-    console.log(user);
     res.render('usuario/configuracion', { user });
 };
 
@@ -135,3 +134,23 @@ export const updateUsuario = async (req, res) => {
         res.status(500).send("Error actualizando usuario");
     }
 };
+
+export const getUsuarios = async (req, res) => {
+    try {
+        const usuarios = await getAllUsuariosWithRoles()
+        const roles = await getRoles()
+        res.render('usuario/listado', { usuarios, roles });
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+export const updateRoles = async (req, res) => {
+    try {
+        const { id_usuario: idUsuario, id_rol: idRole } = req.body;
+        await updateRole(idUsuario, idRole);
+    } catch (e) {
+        console.error(e);
+        res.status(500).send("Error actualizando usuario");
+    }
+}
