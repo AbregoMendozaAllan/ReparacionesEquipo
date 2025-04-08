@@ -59,17 +59,20 @@ export const getSolicitudesActivas = async () => {
 
 export const getSolicitudConSolicitantePorId = async (idSolicitud) => {
     const query = `
-        SELECT s.descripcion_problema,
-               s.fecha_solicitud,
-               u.nombre AS solicitante,
-               u.telefono AS telefono,
-               s.id_usuario_solicitante
+        SELECT s.*, u.nombre AS solicitante_nombre, u.telefono AS solicitante_telefono
         FROM solicitudessoporte s
-        INNER JOIN usuarios u ON u.id_usuario = s.id_usuario_solicitante
+        INNER JOIN usuarios u ON s.id_usuario_solicitante = u.id_usuario
         WHERE s.id_solicitud = ?
     `;
     const resultados = await executeQuery(query, [idSolicitud]);
-    return resultados[0];
+    if (resultados.length > 0) {
+        return {
+            ...resultados[0],
+            nombre: resultados[0].solicitante_nombre,
+            telefono: resultados[0].solicitante_telefono
+        };
+    }
+    return null;
 };
 
 export const createSoporteConAsignacion = async (usuarioId, equipoId, problema, estadoSolicitud, idTecnicoAsignado) => {
